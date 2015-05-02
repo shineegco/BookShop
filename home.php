@@ -48,6 +48,9 @@
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
                     <li>
+                        <a href="login.php">Login</a>
+                    </li>
+                    <li>
                         <a href="#">Profile</a>
                     </li>
                     <li>
@@ -56,11 +59,10 @@
                     <li>
                         <a href="#">Contact</a>
                     </li>
-                    <li>
-                         <a href="#">Login</a>
-                    </li>
                 </ul>
             </div>
+            
+            
             <!-- /.navbar-collapse -->
         </div>
         <!-- /.container -->
