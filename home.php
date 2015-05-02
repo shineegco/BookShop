@@ -1,5 +1,9 @@
 <?php
-
+    // Start session
+    session_start(); 
+    
+    // Include required functions file 
+    require_once('include/functions.inc.php'); 
 ?>
 
 <html lang="en">
@@ -32,7 +36,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color: #9e5417">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -46,12 +50,9 @@
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
+                <ul class="nav navbar-nav pull-right">
                     <li>
-                        <a href="login.php">Login</a>
-                    </li>
-                    <li>
-                        <a href="#">Profile</a>
+                        <a href="profile.php">Profile</a>
                     </li>
                     <li>
                         <a href="#">History</a>
@@ -59,6 +60,27 @@
                     <li>
                         <a href="#">Contact</a>
                     </li>
+                    <li>
+          <?php
+                 if (check_login_status() == false) { 
+          ?>
+                    <li>
+                        <a href="login.php">Login</a>
+                    </li>
+         <?php
+                 }
+                 else {
+         ?> 
+                    <li>
+                        <a> <?php echo "Username: ". $_SESSION['username']; ?> </a>
+                    </li>
+                    <li>
+                        <a href="include/logout.inc.php">Logout</a>
+                    </li>
+         <?php
+                 }
+         ?>
+                    
                 </ul>
             </div>
             

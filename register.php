@@ -19,9 +19,15 @@
     
     $sql_user = "INSERT INTO `username`(`username`, `password`) VALUES ('".$username."', '".md5($password)."')";
     $result = mysqli_query($link, $sql_user) or die("Data not found");
-    $sql_person = "INSERT INTO `personinfo`(`username`, `name`, `surname`, `birthday`, `address`, `phone`, `email`)"
-                ."VALUES ('".$username."', '".$name."', '".$surname."', '".$birthdate."', '".$address."', '".$phone."', '".$email."')";
+    // get auto-generated id
+    $id = mysqli_insert_id($link); 
+
+    $sql_person = "INSERT INTO `personinfo`(`id`, `username`, `name`, `surname`, `birthday`, `address`, `phone`, `email`)"
+                ."VALUES ('".$id."', ".$username."', '".$name."', '".$surname."', '".$birthdate."', '".$address."', '".$phone."', '".$email."')";
     $result2 = mysqli_query($link, $sql_person) or die("Data not found");
+    
+    //close connect
+    mysqli_close($con);
 
     header("location:login.php");
 ?>

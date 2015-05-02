@@ -170,7 +170,7 @@
 										<input type="text" name="lastname" id="lastname" tabindex="3" required="" pattern="^[a-zA-Z]+" class="form-control" placeholder="LastName" value="">
 									</div>
                                                                         <div class="form-group">
-										<input type="date" name="birthdate" id="birthdate" tabindex="3" required="" class="form-control" placeholder="Birth Date" value="">
+										<input type="date" name="birthdate" id="birthdate" tabindex="3" required="" class="form-control" placeholder="Date of Birth" value="">
 									</div>
                                                                         <div class="form-group">
                                                                             <textarea rows="4" cols="50" name="address" id="address" tabindex="3" required="" pattern="[a-zA-Z0-9 .-_/]+" class="form-control" placeholder="Address" value=""></textarea>
@@ -224,7 +224,7 @@
             $('#confirm_password').focus();
         }
     }
-    
+/*    
     function register() {
         var patt = new RegExp("[a-zA-Z0-9]");
         var patt_phone = new RegExp("[0-9]{10}");
@@ -328,7 +328,7 @@
             alert("Please fill in "+error);
         }
     }
-
+*/
 </script>
 </body>
 </html>
