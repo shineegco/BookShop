@@ -55,7 +55,7 @@
                         <a href="profile.php">Profile</a>
                     </li>
                     <li>
-                        <a href="#">History</a>
+                        <a href="history.php">History</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>

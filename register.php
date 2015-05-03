@@ -27,7 +27,7 @@
     $result2 = mysqli_query($link, $sql_person) or die("Data not found");
     
     //close connect
-    mysqli_close($con);
+    mysqli_close($link);
 
     header("location:login.php");
 ?>
