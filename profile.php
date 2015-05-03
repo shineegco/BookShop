@@ -22,12 +22,17 @@
     //connect Database
     $link = mysqli_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD) or die("Could not connect to host");
     mysqli_select_db($link, DB_DATABASE) or die("Could not find database");
-    
-    $sql = "SELECT * FROM `personinfo` WHERE username='".$username."' AND id=".$uid;
+
+    $sql = "SELECT  username, name, surname, birthday, address, phone, email, U.id "
+           ." FROM username U, personinfo P "
+           ." WHERE U.id=P.id AND username='".$username."' AND U.id=".$uid;
+
     
     //echo $sql;/////////////try///////////
     
-    $result = mysqli_query($link, $sql) or die("Data not found");
+    $result = mysqli_query($link, $sql);
+    
+    $num_row = mysqli_num_rows($result);
     
     $row = mysqli_fetch_array($result);   
 ?>
@@ -85,6 +90,108 @@
         .toppad
         {margin-top:20px;
         }
+        
+        /* button */
+        .btn-sample { 
+            color: #ffffff; 
+            background-color: #BD411B; 
+            border-color: #9E461E; 
+            border-top-left-radius: 5px 5px;
+            border-bottom-left-radius: 5px 5px;
+            border-bottom-right-radius: 5px 5px;
+            border-top-right-radius: 5px 5px;
+          } 
+
+          .btn-sample:hover, 
+          .btn-sample:focus, 
+          .btn-sample:active, 
+          .btn-sample.active, 
+          .open .dropdown-toggle.btn-sample { 
+            color: #ffffff; 
+            background-color: #F7A071; 
+            border-color: #9E461E; 
+          } 
+
+          .btn-sample:active, 
+          .btn-sample.active, 
+          .open .dropdown-toggle.btn-sample { 
+            background-image: none; 
+          } 
+
+          .btn-sample.disabled, 
+          .btn-sample[disabled], 
+          fieldset[disabled] .btn-sample, 
+          .btn-sample.disabled:hover, 
+          .btn-sample[disabled]:hover, 
+          fieldset[disabled] .btn-sample:hover, 
+          .btn-sample.disabled:focus, 
+          .btn-sample[disabled]:focus, 
+          fieldset[disabled] .btn-sample:focus, 
+          .btn-sample.disabled:active, 
+          .btn-sample[disabled]:active, 
+          fieldset[disabled] .btn-sample:active, 
+          .btn-sample.disabled.active, 
+          .btn-sample[disabled].active, 
+          fieldset[disabled] .btn-sample.active { 
+            background-color: #BD411B; 
+            border-color: #9E461E; 
+          } 
+
+          .btn-sample .badge { 
+            color: #BD411B; 
+            background-color: #ffffff; 
+          }   
+          
+          /* button2 */
+          .btn-sample2 { 
+            color: #ffffff; 
+            background-color: #F07041; 
+            border-color: #E37E3B; 
+            border-top-left-radius: 5px 5px;
+            border-bottom-left-radius: 5px 5px;
+            border-bottom-right-radius: 5px 5px;
+            border-top-right-radius: 5px 5px;
+          } 
+
+          .btn-sample2:hover, 
+          .btn-sample2:focus, 
+          .btn-sample2:active, 
+          .btn-sample2.active, 
+          .open .dropdown-toggle.btn-sample2 { 
+            color: #ffffff; 
+            background-color: #F2BA77; 
+            border-color: #E37E3B; 
+          } 
+
+          .btn-sample2:active, 
+          .btn-sample2.active, 
+          .open .dropdown-toggle.btn-sample2 { 
+            background-image: none; 
+          } 
+
+          .btn-sample2.disabled, 
+          .btn-sample2[disabled], 
+          fieldset[disabled] .btn-sample2, 
+          .btn-sample2.disabled:hover, 
+          .btn-sample2[disabled]:hover, 
+          fieldset[disabled] .btn-sample2:hover, 
+          .btn-sample2.disabled:focus, 
+          .btn-sample2[disabled]:focus, 
+          fieldset[disabled] .btn-sample2:focus, 
+          .btn-sample2.disabled:active, 
+          .btn-sample2[disabled]:active, 
+          fieldset[disabled] .btn-sample2:active, 
+          .btn-sample2.disabled.active, 
+          .btn-sample2[disabled].active, 
+          fieldset[disabled] .btn-sample2.active { 
+            background-color: #F07041; 
+            border-color: #E37E3B; 
+          } 
+
+          .btn-sample2 .badge { 
+            color: #F07041; 
+            background-color: #ffffff; 
+          }
     </style>
     <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
@@ -117,7 +224,7 @@
                         <a href="profile.php">Profile</a>
                     </li>
                     <li>
-                        <a href="#">History</a>
+                        <a href="history.php">History</a>
                     </li>
                     <li>
                         <a href="#">Contact</a>
@@ -197,9 +304,10 @@
                 </div>
               </div>
             </div>
-                 <div class="panel-footer">
+                 <div class="panel-footer">                     
                         <span class="pull-right">
-                            <input type="button" id="save" value="save" class="btn btn-warning" onclick="save()">
+                            <input type="button" id="save" value="save" class="btn-sample" onclick="save()">
+                            <input type="button" id="cancel" value="cancel" class="btn-sample2" onclick="cancel()">
                             <a data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" onclick="edit()"><i class="glyphicon glyphicon-edit"></i></a>
                             <a href="include/logout.inc.php" data-original-title="Logout" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                         </span>
@@ -220,6 +328,7 @@
             panels.hide();
             
             $('#save').hide();
+            $('#cancel').hide();
 
             //Click dropdown
             panelsButton.click(function() {
@@ -261,6 +370,19 @@
             
             $('#name').focus();
             $('#save').show();
+            $('#cancel').show();
+        }
+        
+        function cancel() {
+            $('#name').attr("readonly", true);
+            $('#surname').attr("readonly", true);
+            $('#birthday').attr("readonly", true);
+            $('#email').attr("readonly", true);
+            $('#address').attr("readonly", true);
+            $('#phone').attr("readonly", true);
+            
+            $('#save').hide();
+            $('#cancel').hide();
         }
         
         function save() {

@@ -4,6 +4,27 @@
     
     // Include required functions file 
     require_once('include/functions.inc.php'); 
+    
+    // get username from session
+    $username = $_SESSION['username'];
+    
+    // get uid from session
+    $uid = $_SESSION['uid'];
+    
+    //include
+    require_once('include/config.inc.php');
+
+    //connect Database
+    $link = mysqli_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD) or die("Could not connect to host");
+    mysqli_select_db($link, DB_DATABASE) or die("Could not find database");
+
+    // find category in DB
+    $sql_cat = "SELECT * FROM `category`"; 
+    $result = mysqli_query($link, $sql_cat);
+    
+    // find book in DB
+    $sql_book = "SELECT * FROM category C, book B WHERE C.id_category=B.id_category AND C.id_category=1";
+    $result_book = mysqli_query($link, $sql_book);
 ?>
 
 <html lang="en">
@@ -30,6 +51,12 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    
+    <script>
+        function show_book(id) {
+            
+        }
+    </script>
 
 </head>
 
@@ -55,7 +82,7 @@
                         <a href="profile.php">Profile</a>
                     </li>
                     <li>
-                        <a href="#">History</a>
+                        <a href="history.php">History</a>
                     </li>
                     <li>
                         <a href="contact.php">Contact</a>
@@ -129,9 +156,13 @@
             <div class="col-md-3">
              <!--   <p class="lead">Shop Name</p>   -->
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+            <?php
+                while ($row = mysqli_fetch_array($result)) {
+            ?>
+                    <a onclick="show_book(<?php echo $row['id_category']; ?>)" style="cursor: pointer" class="list-group-item"><?php echo $row['name_cate']; ?></a>
+            <?php
+                }
+            ?>
                 </div>
             </div>
 
@@ -139,68 +170,25 @@
 
                 
 
-                <div class="row">
-
+                <div class="row" id="book">
+            <?php
+                while ($row = mysqli_fetch_array($result_book)) {
+            ?>
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
                             <img src="http://placehold.it/320x150" alt="">
                             <div class="caption">
-                                <h4 class="pull-right">$24.99</h4>
-                                <h4><a href="#">First Product</a>
-                                </h4>
-                                <p>See more snippets like this online store item at <a target="_blank" href="http://www.bootsnipp.com">Bootsnipp - http://bootsnipp.com</a>.</p>
+                                <h4><?php echo $row['name']; ?></h4>
+                                <h5>Author: <?php echo $row['author']; ?></h5>
+                                <h5>category: <?php echo $row['name_cate']; ?></h5>
+                                <h4 class="pull-right"> $<?php echo $row['price']; ?> </h4>
+                                <h5>Amount: <?php echo $row['amount']; ?></h5>
                             </div>
                         </div>
                     </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$64.99</h4>
-                                <h4><a href="#">Second Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$74.99</h4>
-                                <h4><a href="#">Third Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$84.99</h4>
-                                <h4><a href="#">Fourth Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-sm-4 col-lg-4 col-md-4">
-                        <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
-                            <div class="caption">
-                                <h4 class="pull-right">$94.99</h4>
-                                <h4><a href="#">Fifth Product</a>
-                                </h4>
-                                <p>This is a short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                            </div>
-                        </div>
-                    </div>
-
+            <?php
+                }
+            ?>
                 </div>
 
             </div>
