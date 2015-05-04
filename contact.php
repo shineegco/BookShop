@@ -143,7 +143,7 @@
 
         <!-- Footer -->
         <footer>
-            <div class="row">
+            <div class="row pull-left">
                 <div class="col-lg-12">
                     <p>Copyright &copy; Shiro Store Co,.Ltd 2014</p>
                 </div>

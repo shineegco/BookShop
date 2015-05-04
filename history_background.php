@@ -32,7 +32,7 @@
            ." WHERE U.id=T.id AND T.id_book=B.id_Book";
     }
     else {
-        $sql = "SELECT id_transaction, B.name, B.author, T.amount, T.price, T.date "
+        $sql = "SELECT id_transaction, B.name, B.author,T.amount, T.price, T.date "
                ." FROM username U, transaction T, book B "
                ." WHERE U.id=T.id AND T.id_book=B.id_Book AND U.id=".$id; // AND U.username='".$username."'
     }
@@ -41,16 +41,14 @@
     
     $result = mysqli_query($link, $sql);
     
-    $num_row = mysqli_num_rows($result);
-    
-        $rows = array();
-        
-        while($r = mysqli_fetch_assoc($result)) {
-            $rows[] = $r;
-        }
-        
-        //JSON
-        print json_encode($rows);
+    $rows = array();
+
+    while($r = mysqli_fetch_assoc($result)) {
+        $rows[] = $r;
+    }
+
+    //JSON
+    print json_encode($rows);
 
     //close connect
     mysqli_close($link);

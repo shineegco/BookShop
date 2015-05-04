@@ -5,11 +5,16 @@
     // Include required functions file 
     require_once('include/functions.inc.php'); 
     
-    // get username from session
-    $username = $_SESSION['username'];
+    $username = "null";
     
-    // get uid from session
-    $uid = $_SESSION['uid'];
+    // check login
+    if (check_login_status() == true) { 
+        // get username from session
+        $username = $_SESSION['username'];
+
+        // get uid from session
+        $uid = $_SESSION['uid'];
+    }
     
     //include
     require_once('include/config.inc.php');
@@ -44,6 +49,9 @@
 
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
+    
+    
+    <script type="text/javascript" src="js/simpleCart.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -53,6 +61,7 @@
     <![endif]-->
     
     <script>
+        // show list of book
         function show_book(id) {
             if($('#book').find('div').length > 0) {
                 $('#book').find('div').remove();
@@ -79,13 +88,13 @@
                         for(i in jsonObj) {
                              text =  '<div class="col-sm-4 col-lg-4 col-md-4">'
                                     + '<div class="thumbnail">'
-                                    + '<img src="http://placehold.it/320x150" alt="">'
+                                    + '<img src="http://placehold.it/320x150" alt="" style="cursor: pointer" onclick="show_detail('+jsonObj[i].id_book+')">'
                                     + '<div class="caption">'
-                                    + '<h4>'+jsonObj[i].name+'</h4>'
+                                    + '<h4 style="cursor: pointer" onclick="show_detail('+jsonObj[i].id_book+')">'+jsonObj[i].name+'</h4>'
                                     + '<h5>Author: '+jsonObj[i].author+'</h5>'
                                     + '<h5>category: '+jsonObj[i].name_cate+'</h5>'
                                     + '<h4 class="pull-right"> $'+jsonObj[i].price+'</h4>'
-                                    + '<h5>Amount: '+jsonObj[i].amount+'</h5>'
+                                    + '<h5>In stock: '+jsonObj[i].amount+'</h5>'
                                     + '</div>'
                                     + '</div>'
                                     + '</div>';
@@ -99,6 +108,192 @@
             }
             xmlhttp.open("POST","search_book.php?id="+id,true);
             xmlhttp.send();
+        }
+        
+        // show book detail
+        function show_detail(id) {
+            if($('#book').find('div').length > 0) {
+                $('#book').find('div').remove();
+            }
+            
+            var username = $('#username').val();
+            
+            // AJAX
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var jsonObj = JSON.parse(xmlhttp.responseText);
+                    
+                    if(jsonObj.length == 0) {
+                       alert("Data not found");
+                    }
+                    else{
+                        //alert("HAVE");//////////try/////////
+                    
+                        for(i in jsonObj) {
+                             text =  '<div class="simpleCart_shelfItem">'
+                                    + '<div class="pull-left">'
+                                    + '<img src="http://placehold.it/320x150" alt="">'
+                                    + '</div>'
+                                    + '<div class="pull-right">';
+                            
+                            if(username == "admin"){
+                                text = text+ '<h2 class="item_name"><input type="text" id="bname" value="'+jsonObj[i].name+'" readonly></h2>'
+                                    + '<h4>Author: <input type="text" id="bauthor" value="'+jsonObj[i].author+'" readonly></h4>'
+                                    + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
+                                    + '<h4>In stock: <input type="number"  min="1" max="999" id="bamount" value="'+jsonObj[i].amount+'" readonly></h4> <br>'
+                                    + '<h4><textarea rows="4" cols="40" id="bdetail" readonly>'+jsonObj[i].detail+'</textarea></h4> <br>'
+                                    + '<h4><span class="item_price"> $<input type="text" size="4" id="bprice" value="'+jsonObj[i].price+'" readonly></span>'
+                                    + '&nbsp;&nbsp;<input type="button" id="edit" value="Edit" onclick="edit(\''+jsonObj[i].id_book+'\')">'
+                                    + '&nbsp;&nbsp;<input type="button" id="delete" value="Delete" onclick="bdelete(\''+jsonObj[i].id_book+'\',\''+jsonObj[i].name+'\')">'
+                                    + '&nbsp;&nbsp;<div id="bsave"></div>';
+                            }
+                            else {
+                                text = text + '<h2 class="item_name">'+jsonObj[i].name+'</h2>'
+                                    + '<h4>Author: '+jsonObj[i].author+'</h4>'
+                                    + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
+                                    + '<h4>In stock: '+jsonObj[i].amount+'</h4> <br>'
+                                    + '<h4>'+jsonObj[i].detail+'</h4> <br>'
+                                    + '<h4><span class="item_price"> $'+jsonObj[i].price+'</span>'
+                                    + '&nbsp;&nbsp;&nbsp;<input type="number" class="item_quantity" min="1" max="'+jsonObj[i].amount+'" onchange="cal_price(this.value,'+jsonObj[i].price+')">'
+                                    + '&nbsp;&nbsp;&nbsp;Price: <input type="text" id="price" size="5" value="" readonly>'
+                                    + '&nbsp;&nbsp;<input type="button" id="change" value="Change to Bath" onclick="change_bath()">'
+                                    + '&nbsp;&nbsp;<a class="item_add">Add to cart</a>';
+                            }
+                                    
+                                text = text + '</h4>'
+                                    + '</div>'
+                                    + '</div>';
+
+                            //alert(text);//////////try/////////
+
+                            $('#book').append(text);
+                        }
+                    }
+                }
+            }
+            xmlhttp.open("POST","search_book_detail.php?id="+id,true);
+            xmlhttp.send();
+        }
+        
+        // calculate price
+        function cal_price(amount,price) {
+            //alert("amount "+amount+"  price  "+price);///////try////////
+            
+            var sum = parseInt(amount)*parseInt(price);
+            
+            $('#price').val('$'+sum);
+        }
+        
+        // change $ to ฿
+        function change_bath() {
+            // AJAX
+    /*        if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var result = xmlhttp.responseText;
+                    
+                    alert(result);///////////////try//////////////
+
+                }
+            }
+            xmlhttp.open("GET","http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate?FromCurrency=USD&ToCurrency=THB",true);
+            xmlhttp.send();
+    */
+            $.get('http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate?FromCurrency=USD&ToCurrency=THB',
+            {
+                 
+            }).done(function(result){
+                alert(result);//////////try/////////
+                           
+            });
+        }
+        
+        function edit(id) {
+            $('#bname').attr("readonly", false);
+            $('#bauthor').attr("readonly", false);
+            $('#bamount').attr("readonly", false);
+            $('#bdetail').attr("readonly", false);
+            $('#bprice').attr("readonly", false);
+            
+            text = '<input type="button" id="save" value="Save" onclick="save(\''+id+'\')">'
+                + '&nbsp;&nbsp;<input type="button" id="cancel" value="Cancel" onclick="cancel()">'
+        
+            $('#bsave').append(text);
+        }
+        
+        function cancel() {
+            $('#bname').attr("readonly", true);
+            $('#bauthor').attr("readonly", true);
+            $('#bamount').attr("readonly", true);
+            $('#bdetail').attr("readonly", true);
+            $('#bprice').attr("readonly", true);
+            
+            $('#save').hide();
+            $('#cancel').hide();
+        }
+        
+        function bdelete(id,name) {
+            if (confirm("Do you want to delete " + name) == true) {
+                $.get('delete_book.php',
+               {
+                    id: id
+               }).done(function(result){
+                   //alert(result);//////////try/////////
+
+                   if(result == "success") {
+                       alert("Success");
+                       location.reload();    
+                   }
+                   else {
+                       alert("Have problem in process. please try again.");
+                   }
+
+               });
+            }
+        }
+        
+        function save(id) {
+            var name = $('#bname').val();
+            var author = $('#bauthor').val();
+            var amount = $('#bamount').val();
+            var detail = $('#bdetail').val();
+            var price = $('#bprice').val();
+            
+            //alert("name  "+name+"  author  "+author+"  amount  "+amount+"  detail  "+detail+"  price  "+price);//////try/////
+            
+            $.post('update_book.php',
+            {
+                name: name,
+                author: author,
+                amount: amount,
+                detail: detail,
+                price: price,
+                id: id   
+            }).done(function(result){
+                //alert("result "+result);//////////try/////////
+                
+                if(result == "success") {
+                    alert("Success");
+                    cancel();
+                    //location.reload();
+                }
+                else {
+                    alert("Have problem in process. please try again.");
+                }
+            });
         }
     </script>
 
@@ -122,9 +317,15 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav pull-right">
+          <?php
+                 if (check_login_status() == true && $username != "admin") { 
+          ?>
                     <li>
                         <a href="profile.php">Profile</a>
                     </li>
+          <?php
+                 }
+         ?> 
                     <li>
                         <a href="history.php">History</a>
                     </li>
@@ -209,11 +410,26 @@
                 }
             ?>
                 </div>
+           
+                <br><br>
+                
+           <?php
+                  if($username != "admin" && $username != "null") {
+           ?>
+                <div class="">
+                    Cart: <span class="simpleCart_total"></span> (<span class="simpleCart_quantity"></span> items) <br/>
+                    <a href="javascript:;" class="simpleCart_empty">Empty Cart</a> 
+                    <a href="view_cart.php" class="viewcart">Viewcart</a>
+                    <div class="clear"></div>
+                </div>
+            <?php
+                }
+            ?>
             </div>
 
             <div class="col-md-9">
 
-                
+                <input type="hidden" id="username" value="<?php echo $username; ?>">
 
                 <div class="row" id="book">
             <?php
@@ -221,19 +437,20 @@
             ?>
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="">
+                            <img src="http://placehold.it/320x150" alt="" style="cursor: pointer" onclick="show_detail(<?php echo $row['id_book']; ?>)">
                             <div class="caption">
-                                <h4><?php echo $row['name']; ?></h4>
+                                <h4 style="cursor: pointer" onclick="show_detail(<?php echo $row['id_book']; ?>)"><?php echo $row['name']; ?></h4>
                                 <h5>Author: <?php echo $row['author']; ?></h5>
                                 <h5>category: <?php echo $row['name_cate']; ?></h5>
                                 <h4 class="pull-right"> $<?php echo $row['price']; ?> </h4>
-                                <h5>Amount: <?php echo $row['amount']; ?></h5>
+                                <h5>In stock: <?php echo $row['amount']; ?></h5>
                             </div>
                         </div>
                     </div>
             <?php
                 }
             ?>
+                    
                 </div>
                 <!-- end div class row -->
             </div>
@@ -255,7 +472,10 @@
                 </div>
             </div>
         </footer>
-
+        
+        <div>
+            <!-- test -->
+        </div>
     </div>
     <!-- /.container -->
 

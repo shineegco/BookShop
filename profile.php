@@ -55,7 +55,7 @@
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
 
-    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet">
+<!--    <link href="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet"> -->
     <style type="text/css">
         .user-row {
             margin-bottom: 14px;
@@ -220,14 +220,20 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav pull-right">
+          <?php
+                 if (check_login_status() == true && $username != "admin") { 
+          ?>
                     <li>
                         <a href="profile.php">Profile</a>
                     </li>
+          <?php
+                 }
+         ?> 
                     <li>
                         <a href="history.php">History</a>
                     </li>
                     <li>
-                        <a href="#">Contact</a>
+                        <a href="contact.php">Contact</a>
                     </li>
                      <?php
                  if (check_login_status() == false) { 

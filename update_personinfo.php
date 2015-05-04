@@ -22,7 +22,7 @@
     //echo $sql_person."<br>";////////////try/////////
    
     try{
-    // insert to table
+        // insert to table
         $result = mysqli_query($link, $sql_person);
     }catch(Exception $e){
         echo "fail";
