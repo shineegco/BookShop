@@ -54,7 +54,51 @@
     
     <script>
         function show_book(id) {
+            if($('#book').find('div').length > 0) {
+                $('#book').find('div').remove();
+            }
             
+            // AJAX
+            if (window.XMLHttpRequest) {
+                // code for IE7+, Firefox, Chrome, Opera, Safari
+                xmlhttp = new XMLHttpRequest();
+            } else {
+                // code for IE6, IE5
+                xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+            xmlhttp.onreadystatechange = function() {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var jsonObj = JSON.parse(xmlhttp.responseText);
+                    
+                    if(jsonObj.length == 0) {
+                       alert("Data not found");
+                    }
+                    else{
+                        //alert("HAVE");//////////try/////////
+                    
+                        for(i in jsonObj) {
+                             text =  '<div class="col-sm-4 col-lg-4 col-md-4">'
+                                    + '<div class="thumbnail">'
+                                    + '<img src="http://placehold.it/320x150" alt="">'
+                                    + '<div class="caption">'
+                                    + '<h4>'+jsonObj[i].name+'</h4>'
+                                    + '<h5>Author: '+jsonObj[i].author+'</h5>'
+                                    + '<h5>category: '+jsonObj[i].name_cate+'</h5>'
+                                    + '<h4 class="pull-right"> $'+jsonObj[i].price+'</h4>'
+                                    + '<h5>Amount: '+jsonObj[i].amount+'</h5>'
+                                    + '</div>'
+                                    + '</div>'
+                                    + '</div>';
+
+                            //alert(text);//////////try/////////
+
+                            $('#book').append(text);
+                        }
+                    }
+                }
+            }
+            xmlhttp.open("POST","search_book.php?id="+id,true);
+            xmlhttp.send();
         }
     </script>
 
@@ -73,7 +117,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Book Store</a>
+                <a class="navbar-brand" href="#">Shiro Store</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -191,7 +235,7 @@
                 }
             ?>
                 </div>
-
+                <!-- end div class row -->
             </div>
 
         </div>
@@ -207,7 +251,7 @@
         <footer>
             <div class="row">
                 <div class="col-lg-12">
-                    <p>Copyright &copy; Your Website 2014</p>
+                    <p>Copyright &copy; Shiro Store Co,.Ltd 2014</p>
                 </div>
             </div>
         </footer>

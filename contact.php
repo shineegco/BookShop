@@ -53,7 +53,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Book Store</a>
+                <a class="navbar-brand" href="home.php">Shiro Store</a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -62,7 +62,7 @@
                         <a href="profile.php">Profile</a>
                     </li>
                     <li>
-                        <a href="#">History</a>
+                        <a href="history.php">History</a>
                     </li>
                     <li>
                         <a href="contact.php">Contact</a>

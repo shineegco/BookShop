@@ -43,7 +43,6 @@
     
     $num_row = mysqli_num_rows($result);
     
-   //if($num_row > 0) {
         $rows = array();
         
         while($r = mysqli_fetch_assoc($result)) {
@@ -52,7 +51,6 @@
         
         //JSON
         print json_encode($rows);
-    //}
 
     //close connect
     mysqli_close($link);
