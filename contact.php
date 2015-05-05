@@ -4,6 +4,17 @@
     
     // Include required functions file 
     require_once('include/functions.inc.php'); 
+    
+    $username = "null";
+    
+    // check login
+    if (check_login_status() == true) { 
+        // get username from session
+        $username = $_SESSION['username'];
+
+        // get uid from session
+        $uid = $_SESSION['uid'];
+    }
 ?>
 
 <html lang="en">
@@ -73,10 +84,14 @@
                     </li>
            <?php
                  }
-           ?>
+                 if (check_login_status() == true) { 
+          ?>
                     <li>
-                        <a href="history.php">History</a>
+                         <a href="history.php">History</a>
                     </li>
+          <?php
+                 }
+          ?> 
                     <li>
                         <a href="contact.php">Contact</a>
                     </li>
