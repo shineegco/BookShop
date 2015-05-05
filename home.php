@@ -335,7 +335,48 @@
         }
         
         function view_cart() {
+            // clear list book old
+            if($('#book').find('div').length > 0) {
+                $('#book').find('div').remove();
+            }
             
+            head = '<table class="table table-striped table-bordered table-hover" id="dataTables-example">'
+                 + '<thead>'
+                 + '<tr>'
+                 + '<th></th>'
+                 + '<th>Book\'s name</th>'
+                 + '<th>Amount</th>'
+                 + '<th>Price</th>'
+                 + '<th></th>'
+                 + '</tr>'
+                 + '</thead>'
+                 + '<tbody id="result">';
+         
+            //$('#book').append(head);
+           
+            for(i=0; i<num_item; i++) {
+                text = "<tr>"
+                    + "<td>"+(i+1)+"</td>"
+                    + "<td>"+$('#b_name'+i).val()+"</td>"
+                    + "<td>"+$('#b_amount'+i).val()+"</td>"
+                    + "<td>$"+$('#b_total_price'+i).val()+"</td>"
+                    + "<td style=\" text-align: center; \"><img src=\"image/remove-icon.png\" onclick=\"delete_cart('"+i+"')\" style=\"cursor: pointer; width: 20px; height: 20px;\"></td>"
+                    + "</tr>";
+         
+                 head = head + text;
+            }
+            
+            head = head +"<tr>"
+                    + "<td></td>"
+                    + "<td>Total</td>"
+                    + "<td>"+$('#total_item').html()+"</td>"
+                    + "<td>$"+$('#total_price').html()+"</td>"
+                    + "<td></td>"
+                    + "</tr>"
+                    + "</tbody>"
+                    + "</table>";
+            
+            $('#book').append(head);
         }
     </script>
 
@@ -344,7 +385,7 @@
 <body>
 
     <!-- Navigation -->
-    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color: #9e5417">
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation" style="background-color: #9e5417;">
         <div class="container">
             <!-- Brand and toggle get grouped for better mobile display -->
             <div class="navbar-header">
@@ -547,6 +588,21 @@
 
     <!-- Bootstrap Core JavaScript -->
     <script src="js/bootstrap.min.js"></script>
+    
+    <!-- jQuery -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
 
 </body>
 

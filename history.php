@@ -164,9 +164,7 @@
      <!--   <div id="test"></div>   -->
     </center>
 
-   
-
-
+  
     <!-- jQuery -->
     <script src="bower_components/jquery/dist/jquery.min.js"></script>
 
