@@ -16,7 +16,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Book Store</title>
+    <title>Shiro Store</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -58,9 +58,22 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav pull-right">
+            <?php
+                 if (check_login_status() == true && $username != "admin") { 
+          ?>
                     <li>
                         <a href="profile.php">Profile</a>
                     </li>
+          <?php
+                 }
+                 else if (check_login_status() == true && $username == "admin") { 
+          ?> 
+                    <li>
+                        <a href="new_book.php">New book</a>
+                    </li>
+           <?php
+                 }
+           ?>
                     <li>
                         <a href="history.php">History</a>
                     </li>

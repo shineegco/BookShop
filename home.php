@@ -42,7 +42,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Book Store</title>
+    <title>Shiro Store</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -325,7 +325,14 @@
                     </li>
           <?php
                  }
-         ?> 
+                 else if (check_login_status() == true && $username == "admin") { 
+          ?> 
+                    <li>
+                        <a href="new_book.php">New book</a>
+                    </li>
+           <?php
+                 }
+           ?>          
                     <li>
                         <a href="history.php">History</a>
                     </li>
