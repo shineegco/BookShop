@@ -69,6 +69,10 @@
             if($('#book').find('div').length > 0) {
                 $('#book').find('div').remove();
             }
+            // clear view cart
+            if($('#book').find('table').length > 0){
+                $('#book').find('table').remove();
+            }
             
             // AJAX
             if (window.XMLHttpRequest) {
@@ -118,6 +122,10 @@
             // clear list book old
             if($('#book').find('div').length > 0) {
                 $('#book').find('div').remove();
+            }
+            // clear view cart
+            if($('#book').find('table').length > 0){
+                $('#book').find('table').remove();
             }
             
             var username = $('#username').val();
@@ -276,6 +284,10 @@
             if($('#cart_list').find('input').length > 0) {
                 $('#cart_list').find('input').remove();
             }
+            // clear table view cart old
+            if($('#book').find('table').length > 0){
+                $('#book').find('table').remove();
+            }
             
             $('#total_price').html("0");
             $('#total_item').html("0");
@@ -334,10 +346,15 @@
             }
         }
         
+        // view all item of order
         function view_cart() {
             // clear list book old
             if($('#book').find('div').length > 0) {
                 $('#book').find('div').remove();
+            }
+            // clear table view cart old
+            if($('#book').find('table').length > 0){
+                $('#book').find('table').remove();
             }
             
             head = '<table class="table table-striped table-bordered table-hover" id="dataTables-example">'
@@ -355,8 +372,8 @@
             //$('#book').append(head);
            
             for(i=0; i<num_item; i++) {
-                text = "<tr>"
-                    + "<td>"+(i+1)+"</td>"
+                text = "<tr id=\"cart"+i+"\">"
+                    + "<td id=\"cart_id"+i+"\">"+(i+1)+"</td>"
                     + "<td>"+$('#b_name'+i).val()+"</td>"
                     + "<td>"+$('#b_amount'+i).val()+"</td>"
                     + "<td>$"+$('#b_total_price'+i).val()+"</td>"
@@ -368,15 +385,76 @@
             
             head = head +"<tr>"
                     + "<td></td>"
-                    + "<td>Total</td>"
-                    + "<td>"+$('#total_item').html()+"</td>"
-                    + "<td>$"+$('#total_price').html()+"</td>"
+                    + "<th>Total</th>"
+                    + "<td id=\"cart_total_item\">"+$('#total_item').html()+"</td>"
+                    + "<td id=\"cart_total_price\">$"+$('#total_price').html()+"</td>"
                     + "<td></td>"
                     + "</tr>"
                     + "</tbody>"
                     + "</table>";
             
             $('#book').append(head);
+        }
+        
+        // delete item in order
+        function delete_cart(id){
+            //alert("delete row "+id);//////try////
+            
+            // get total price and amount of item before delete
+            var d_total_price = parseInt($('#b_total_price'+id).val());
+            var d_amount = parseInt($('#b_amount'+id).val());
+            
+            // change total price and total item to order
+            var tot_p = parseInt($('#total_price').html());
+            $('#total_price').html(tot_p-d_total_price);
+            $('#cart_total_price').html("$"+(tot_p-d_total_price));
+
+            var tot_i = parseInt($('#total_item').html());
+            $('#total_item').html(tot_i-d_amount);
+            $('#cart_total_item').html(tot_i-d_amount);
+            
+            
+            
+            // delete item
+            $('#b_id'+id).remove();
+            $('#b_name'+id).remove();
+            $('#b_total_price'+id).remove();
+            $('#b_amount'+id).remove();
+            $('#b_price'+id).remove();
+            
+            // delete row in table
+            $('#cart'+id).remove();
+
+
+            for(var i=num_item-1; i>id; i--) {		
+                var b_id = document.getElementById("b_id"+i);
+                b_id.id = "b_id"+(i-1);  // using element properties
+                b_id.setAttribute("name", "b_id"+(i-1));  // using .setAttribute() method
+
+                var b_name = document.getElementById("b_name"+i);
+                b_name.id = "b_name"+(i-1);  // using element properties
+                b_name.setAttribute("name", "b_name"+(i-1));  // using .setAttribute() method
+
+                var b_total_price = document.getElementById("b_total_price"+i);
+                b_total_price.id = "b_total_price"+(i-1);  // using element properties
+                b_total_price.setAttribute("name", "b_total_price"+(i-1));  // using .setAttribute() method
+
+                var b_amount = document.getElementById("b_amount"+i);
+                b_amount.id = "b_amount"+(i-1);  // using element properties
+                b_amount.setAttribute("name", "b_amount"+(i-1));  // using .setAttribute() method
+
+                var b_price = document.getElementById("b_price"+i);
+                b_price.id = "b_price"+(i-1);  // using element properties
+                b_price.setAttribute("name", "b_price"+(i-1));  // using .setAttribute() method
+
+                $('#cart_id'+i).html(i);
+
+            }
+
+            num_item--;
+
+            var elem = document.getElementById("sum");
+            elem.value = num_item;
         }
     </script>
 
