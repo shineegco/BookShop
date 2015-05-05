@@ -95,7 +95,7 @@
                         for(i in jsonObj) {
                              text =  '<div class="col-sm-4 col-lg-4 col-md-4">'
                                     + '<div class="thumbnail">'
-                                    + '<img src="http://placehold.it/320x150" alt="" style="cursor: pointer" onclick="show_detail('+jsonObj[i].id_book+')">'
+                                    + '<img src="'+jsonObj[i].picture+'" height="500px" width="330px" alt="" style="cursor: pointer; max-width: 100%; max-height: 100%; background-size: contain;" onclick="show_detail('+jsonObj[i].id_book+')">'
                                     + '<div class="caption">'
                                     + '<h4 style="cursor: pointer" onclick="show_detail('+jsonObj[i].id_book+')">'+jsonObj[i].name+'</h4>'
                                     + '<h5>Author: '+jsonObj[i].author+'</h5>'
@@ -151,7 +151,7 @@
                         for(i in jsonObj) {
                              text =  '<div class="simpleCart_shelfItem">'
                                     + '<div class="">'
-                                    + '<img src="http://placehold.it/320x150" alt="">'
+                                    + '<img src="'+jsonObj[i].picture+'" alt="" height="500px" width="330px" style="max-width: 100%; max-height: 100%; background-size: contain;">'
                                     + '</div>'
                                     + '<div class=""> <br>';
                             
@@ -619,7 +619,7 @@
             ?>
                     <div class="col-sm-4 col-lg-4 col-md-4">
                         <div class="thumbnail">
-                            <img src="http://placehold.it/320x150" alt="" style="cursor: pointer" onclick="show_detail(<?php echo $row['id_book']; ?>)">
+                            <img src="<?php echo $row['picture']; ?>" height="500px" width="330px" alt="" style="cursor: pointer; max-width: 100%; max-height: 100%; background-size: contain;" onclick="show_detail(<?php echo $row['id_book']; ?>)">
                             <div class="caption">
                                 <h4 style="cursor: pointer" onclick="show_detail(<?php echo $row['id_book']; ?>)"><?php echo $row['name']; ?></h4>
                                 <h5>Author: <?php echo $row['author']; ?></h5>
