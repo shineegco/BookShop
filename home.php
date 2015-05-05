@@ -72,6 +72,7 @@
             // clear view cart
             if($('#book').find('table').length > 0){
                 $('#book').find('table').remove();
+                $('#book').find('h4').remove();
             }
             
             // AJAX
@@ -126,6 +127,7 @@
             // clear view cart
             if($('#book').find('table').length > 0){
                 $('#book').find('table').remove();
+                $('#book').find('h4').remove();
             }
             
             var username = $('#username').val();
@@ -171,7 +173,7 @@
                                     + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
                                     + '<h4 >Author: '+jsonObj[i].author+'</h4>'
                                     + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
-                                    + '<h4>In stock: '+jsonObj[i].amount+'</h4> <br>'
+                                    + '<h4>In stock: <span id="book_stock">'+jsonObj[i].amount+'</span></h4> <br>'
                                     + '<h4>'+jsonObj[i].detail+'</h4> <br>'
                                     + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>'
                                     + '&nbsp;&nbsp;&nbsp;Amount: <input type="number" class="" id="book_amount" min="1" max="'+jsonObj[i].amount+'" onchange="cal_price(this.value,'+jsonObj[i].price+')">'
@@ -287,6 +289,7 @@
             // clear table view cart old
             if($('#book').find('table').length > 0){
                 $('#book').find('table').remove();
+                $('#book').find('h4').remove();
             }
             
             $('#total_price').html("0");
@@ -304,7 +307,7 @@
             var b_name = $('#book_name').html();            
             var b_price = $('#book_price').html();
             b_price = b_price.substr(b_price.indexOf('$')+1);
-            
+                                
             var b_amount = $('#book_amount').val();
             if(!b_amount) {
                 error = error + " amount ";
@@ -316,6 +319,9 @@
                 b_total_price = parseInt(b_total_price.substr(b_total_price.indexOf('$')+1));
                 
             }
+            var stock = parseInt($('#book_stock').html());
+            alert
+            var stock_new = stock - b_amount;
             
             if(error != "") {
                 alert("Please choose"+error+"of book to order");
@@ -327,7 +333,8 @@
                     + '<input type="hidden" id="b_name'+num_item+'" name="b_name'+num_item+'" value="'+b_name+'">'
                     + '<input type="hidden" id="b_total_price'+num_item+'" name="b_total_price'+num_item+'" value="'+b_total_price+'">'
                     + '<input type="hidden" id="b_amount'+num_item+'" name="b_amount'+num_item+'" value="'+b_amount+'">'
-                    + '<input type="hidden" id="b_price'+num_item+'" name="b_price'+num_item+'" value="'+b_price+'">';
+                    + '<input type="hidden" id="b_price'+num_item+'" name="b_price'+num_item+'" value="'+b_price+'">'
+                    + '<input type="hidden" id="b_stock'+num_item+'" name="b_stock'+num_item+'" value="'+stock_new+'">';
 
                 // add item to cart list
                 $('#cart_list').append(text);
@@ -376,7 +383,7 @@
                     + "<td id=\"cart_id"+i+"\">"+(i+1)+"</td>"
                     + "<td>"+$('#b_name'+i).val()+"</td>"
                     + "<td>"+$('#b_amount'+i).val()+"</td>"
-                    + "<td>$"+$('#b_total_price'+i).val()+"</td>"
+                    + "<td id=\"cart_total_price"+i+"\">$"+$('#b_total_price'+i).val()+"</td>"
                     + "<td style=\" text-align: center; \"><img src=\"image/remove-icon.png\" onclick=\"delete_cart('"+i+"')\" style=\"cursor: pointer; width: 20px; height: 20px;\"></td>"
                     + "</tr>";
          
@@ -394,6 +401,12 @@
                     + "</table>";
             
             $('#book').append(head);
+            
+            if(num_item > 0) {
+                span = '<h4><a class="pull-right" style="cursor: pointer;" onclick="check_out()">Checkout</a></h4>';
+
+                $('#book').append(span);
+            }
         }
         
         // delete item in order
@@ -412,8 +425,6 @@
             var tot_i = parseInt($('#total_item').html());
             $('#total_item').html(tot_i-d_amount);
             $('#cart_total_item').html(tot_i-d_amount);
-            
-            
             
             // delete item
             $('#b_id'+id).remove();
@@ -455,6 +466,123 @@
 
             var elem = document.getElementById("sum");
             elem.value = num_item;
+        }
+        
+        // checkout item
+        function check_out() {
+            var form = document.createElement("form");
+                form.setAttribute("method", "post");
+                form.setAttribute("action", "bill.php");
+                
+            var uid = $('#uid').val();
+            var total_item = $('#total_item').html();
+            var total_price = $('#total_price').html();
+            
+            var hiddenField = document.createElement("input");
+                hiddenField.setAttribute("type", "hidden");
+                hiddenField.setAttribute("name", "uid");
+                hiddenField.setAttribute("id","uid");
+                hiddenField.setAttribute("value", uid);
+                
+            var hiddenField2 = document.createElement("input");
+                hiddenField2.setAttribute("type", "hidden");
+                hiddenField2.setAttribute("name", "total_item");
+                hiddenField2.setAttribute("id","total_item");
+                hiddenField2.setAttribute("value", total_item);
+                
+            var hiddenField3 = document.createElement("input");
+                hiddenField3.setAttribute("type", "hidden");
+                hiddenField3.setAttribute("name", "total_price");
+                hiddenField3.setAttribute("id","total_price");
+                hiddenField3.setAttribute("value", total_price);
+                
+           var hiddenField9 = document.createElement("input");
+                hiddenField9.setAttribute("type", "hidden");
+                hiddenField9.setAttribute("name", "num");
+                hiddenField9.setAttribute("id","num");
+                hiddenField9.setAttribute("value", num_item);
+            
+            form.appendChild(hiddenField);
+            form.appendChild(hiddenField2);
+            form.appendChild(hiddenField3);
+            form.appendChild(hiddenField9);
+            
+            //var parameter = "uid="+uid+"&total_item="+total_item+"&total_price="+total_price+"&num="+num_item;
+            
+            for(i=0; i<num_item; i++) {
+                var id =  $('#b_id'+i).val();
+                var name =  $('#b_name'+i).val();
+                var amount = $('#b_amount'+i).val();
+                var price = $('#b_price'+i).val();
+                var total_price = $('#b_total_price'+i).val();
+                var stock = $('#b_stock'+i).val();
+            /*
+                parameter = parameter + '&bid'+i+'='+id
+                        + '&bname'+i+'='+name
+                        + '&bamount'+i+'='+amount
+                        + '&bprice'+i+'='+price
+                        + '&btotal_price'+i+'='+total_price;
+            */
+           
+                var bid = "bid"+i;
+                var hiddenField4 = document.createElement("input");
+                hiddenField4.setAttribute("type", "hidden");
+                hiddenField4.setAttribute("name", bid);
+                hiddenField4.setAttribute("id", bid);
+                hiddenField4.setAttribute("value", id);
+                
+                form.appendChild(hiddenField4);
+                
+                var bname = "bname"+i;
+                var hiddenField5 = document.createElement("input");
+                hiddenField5.setAttribute("type", "hidden");
+                hiddenField5.setAttribute("name", bname);
+                hiddenField5.setAttribute("id", bname);
+                hiddenField5.setAttribute("value", name);
+                
+                form.appendChild(hiddenField5);
+                
+                var bamount = "bamount"+i;
+                var hiddenField6 = document.createElement("input");
+                hiddenField6.setAttribute("type", "hidden");
+                hiddenField6.setAttribute("name", bamount);
+                hiddenField6.setAttribute("id", bamount);
+                hiddenField6.setAttribute("value", amount);
+                
+                form.appendChild(hiddenField6);
+                
+                var bprice = "bprice"+i;
+                var hiddenField7 = document.createElement("input");
+                hiddenField7.setAttribute("type", "hidden");
+                hiddenField7.setAttribute("name", bprice);
+                hiddenField7.setAttribute("id", bprice);
+                hiddenField7.setAttribute("value", price);
+                
+                form.appendChild(hiddenField7);
+                
+                var btotal_price = "btotal_price"+i;
+                var hiddenField8 = document.createElement("input");
+                hiddenField8.setAttribute("type", "hidden");
+                hiddenField8.setAttribute("name", btotal_price);
+                hiddenField8.setAttribute("id", btotal_price);
+                hiddenField8.setAttribute("value", total_price);
+                
+                form.appendChild(hiddenField8);
+                
+                var bstock = "bstock"+i;
+                var hiddenField10 = document.createElement("input");
+                hiddenField10.setAttribute("type", "hidden");
+                hiddenField10.setAttribute("name", bstock);
+                hiddenField10.setAttribute("id", bstock);
+                hiddenField10.setAttribute("value", stock);
+                
+                form.appendChild(hiddenField10);
+            }
+            
+            //alert(parameter);//////////try///////////
+            
+            document.body.appendChild(form);
+            form.submit();    
         }
     </script>
 
@@ -597,6 +725,7 @@
                         <div id="cart_list"></div>
                         
                         <input type="hidden" id="sum" name="sum" value="0">
+                        <input type="hidden" id="currency" name="currency" value="$">
                         
                         <a onclick="empty_cart()" style="cursor: pointer" value="Empty Cart" class="">Empty Cart</a>
                         &nbsp;
