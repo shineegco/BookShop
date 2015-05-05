@@ -73,10 +73,14 @@
                     </li>
            <?php
                  }
-           ?>
+                 if (check_login_status() == true) { 
+          ?>
                     <li>
-                        <a href="history.php">History</a>
+                         <a href="history.php">History</a>
                     </li>
+          <?php
+                 }
+          ?> 
                     <li>
                         <a href="contact.php">Contact</a>
                     </li>

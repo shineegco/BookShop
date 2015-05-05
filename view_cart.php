@@ -48,36 +48,6 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     
-    <script type="text/javascript">
-        simpleCart({
-            // array representing the format and columns of the cart,
-            // see the cart columns documentation
-            cartColumns: [
-                {attr: "name", label: "Product"},
-                {view: "currency", attr: "price", label: "Price"},
-                {view: "decrement", label: "Decrease"},
-                {attr: "quantity", label: "Quantity"},
-                {view: "increment", label: "Increase"},
-                {view: "currency", attr: "total", label: "SubTotal"},
-                {view: "remove", text: "Remove", label: false}
-            ],
-            // "div" or "table" - builds the cart as a 
-            // table or collection of divs
-            cartStyle: "table",
-            // how simpleCart should checkout, see the 
-            // checkout reference for more info 
-            checkout: {
-                type: "PayPal",
-                email: "you@yours.com"
-            },
-            // set the currency, see the currency 
-            // reference for more info
-            currency: "USD",
-            // collection of arbitrary data you may want to store 
-            // with the cart, such as customer info
-        });
-    </script>
-    
 </head>
 
 <body>
@@ -143,13 +113,11 @@
     </nav>
     
     <center>
-        <div class="section group" id="section-group">
-           <div class="simpleCart_items" id="cartItem">
-           </div>
-                <div style="clear:left"></div>            
-                SubTotal: <span class="simpleCart_total" id="subtotal"></span> <br />
-        </div>
-        <a href="javascript:;" onclick="extractData()">checkout</a><br/>
+        <?php
+            $test = $_COOKIE['name'];
+            
+            echo $test;
+        ?>
     </center>
 
 </body>
