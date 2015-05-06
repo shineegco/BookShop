@@ -154,7 +154,7 @@
           </div>
           <div class="row">
             <div class="col-lg-8 col-lg-offset-2 text-center">
-              <p class="contact text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+              <p class="contact text-muted"> “The mediocre teacher tells. The good teacher explains. The superior teacher demonstrates. </br> The great teacher inspires.” ― William Arthur Ward  </p>
             </div>
           </div>
 
