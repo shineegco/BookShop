@@ -32,7 +32,7 @@
 	transition: all 0.1s linear;
 }
 .panel-login>.panel-heading a.active{
-	color: #029f5b;
+	color: #9E5417;
 	font-size: 18px;
 }
 .panel-login>.panel-heading hr{
@@ -63,7 +63,7 @@
 	border-color: #ccc;
 }
 .btn-login {
-	background-color: #59B2E0;
+	background-color: #9E5417;
 	outline: none;
 	color: #fff;
 	font-size: 14px;
@@ -71,12 +71,12 @@
 	font-weight: normal;
 	padding: 14px 0;
 	text-transform: uppercase;
-	border-color: #59B2E6;
+	border-color: #9E5420;
 }
 .btn-login:hover,
 .btn-login:focus {
 	color: #fff;
-	background-color: #53A3CD;
+	background-color: #6A3F1B;
 	border-color: #53A3CD;
 }
 .forgot-password {
@@ -90,7 +90,7 @@
 }
 
 .btn-register {
-	background-color: #1CB94E;
+	background-color: #9E5417;
 	outline: none;
 	color: #fff;
 	font-size: 14px;
@@ -98,13 +98,13 @@
 	font-weight: normal;
 	padding: 14px 0;
 	text-transform: uppercase;
-	border-color: #1CB94A;
+	border-color: #9E5420;
 }
 .btn-register:hover,
 .btn-register:focus {
-	color: #fff;
-	background-color: #1CA347;
-	border-color: #1CA347;
+        color: #fff;
+	background-color: #6A3F1B;
+	border-color: #53A3CD;
 }
 
     </style>
@@ -133,6 +133,8 @@
 					<div class="panel-body">
 						<div class="row">
 							<div class="col-lg-12">
+                                                            
+                                                            <center>    <img src="image/logo.png"></center> 
 								<form id="login-form" action="include/login.inc.php" method="post" role="form" style="display: block;">
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autofocus>
