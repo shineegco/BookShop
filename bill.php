@@ -18,6 +18,7 @@
     $total_item = $_POST['total_item'];
     $total_price = $_POST['total_price'];
     $num = $_POST['num'];
+    $currency = $_POST['currency'];
     
     //connect Database
     $link = mysqli_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD) or die("Could not connect to host");
@@ -30,6 +31,14 @@
     $result = mysqli_query($link, $sql);
     
     $row = mysqli_fetch_array($result); 
+    
+    $name = $row['name'];
+    $surname = $row['surname'];
+    $address = $row['address'];
+    $phone = $row['phone'];   
+    
+    // get current date
+    $date = date("Y-m-d");
     
 ?>
 
@@ -76,26 +85,6 @@
                 });
             });
          });
-
-        // change $ to ฿
-        function change_to_baht() {
-            $.post('change_to_baht.php',
-            { 
-            }).done(function(result){
-                result = parseInt(result);
-                
-                num_item = $('#num').val();
-                
-                for(i=0; i<num_item; i++) {
-                    var tot_p = parseInt($('#b_total_price'+i).val());
-                    $('#cart_total_price'+i).html("฿"+(tot_p*result));
-                }
-                
-                var tot_p = parseInt($('#total_price').val());
-                    
-                $('#cart_total_price').html("฿"+(tot_p*result));
-            });
-        }
     </script>
 
 </head>
@@ -111,9 +100,6 @@
     <div id="bill" style="width: 1000px;">
         <h2>Receive</h2>
         <br>
-        
-        <h4><a onclick="change_to_baht()" style="cursor: pointer" class="pull-right">Change to Baht</a></h4>
-        <br>
         <br>
         <table style="border: 0" class="table table-striped table-bordered table-hover" id="dataTables-example">
             <tr>
@@ -121,13 +107,13 @@
                     First name:
                 </td>
                 <td>
-                   <?php echo $row['name']; ?>
+                   <?php echo $name; ?>
                 </td>
                 <td>
                     Last name:
                 </td>
                 <td>
-                   <?php echo $row['surname']; ?>
+                   <?php echo $surname; ?>
                 </td>
             </tr>
             
@@ -136,7 +122,7 @@
                     Address:
                 </td>
                 <td colspan="3">
-                   <?php echo $row['address']; ?>
+                   <?php echo $address; ?>
                 </td>
             </tr>
             <tr>
@@ -144,7 +130,7 @@
                     Phone:
                 </td>
                 <td colspan="3">
-                   <?php echo $row['phone']; ?>
+                   <?php echo $phone; ?>
                 </td>
             </tr>
             <tr>
@@ -185,6 +171,19 @@
             $bstock_n = (string)"bstock".$i;
             $bstock = $_POST[$bstock_n];
             
+            $price_temp = (string)$currency.$bprice;
+            
+            //save transaction into DB
+            $sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
+                    . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
+            
+            $result_tran = mysqli_query($link, $sql_tran);
+            
+            //update book in stock
+            $sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
+            
+            $result_tran = mysqli_query($link, $sql_book);
+            
 ?>
             <input type="hidden" id="id_book<?php echo $i;?>" value="<?php echo $bid; ?>">
             <input type="hidden" id="b_total_price<?php echo $i;?>" value="<?php echo $btotal_price; ?>">
@@ -201,7 +200,7 @@
                    <?php echo $bamount; ?>
                 </td>
                 <td id="cart_total_price<?php echo $i; ?>">
-                   $<?php echo $btotal_price; ?>
+                   <?php echo $currency.$btotal_price; ?>
                 </td>
             </tr>
 <?php
@@ -216,7 +215,7 @@
                    <?php echo $total_item; ?>
                 </td>
                 <td id="cart_total_price">
-                   $<?php echo $total_price; ?>
+                   <?php echo $currency.$total_price; ?>
                 </td>
             </tr>
       

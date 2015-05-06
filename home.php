@@ -394,9 +394,15 @@
                     + "<td></td>"
                     + "<th>Total</th>"
                     + "<td id=\"cart_total_item\">"+$('#total_item').html()+"</td>"
-                    + "<td id=\"cart_total_price\">$"+$('#total_price').html()+"</td>"
-                    + "<td></td>"
-                    + "</tr>"
+                    + "<td id=\"cart_total_price\">$"+$('#total_price').html()+"</td>";
+            
+            if(num_item > 0) {
+                head = head + '<td id="change_currency" style="text-align: center"><a onclick="change_to_baht()" style="cursor: pointer">Change to Baht</a></td>';
+            }
+            else {
+                 head = head + "<td></td>"
+            }
+                 head = head + "</tr>"
                     + "</tbody>"
                     + "</table>";
             
@@ -432,6 +438,7 @@
             $('#b_total_price'+id).remove();
             $('#b_amount'+id).remove();
             $('#b_price'+id).remove();
+            $('#b_stock'+id).remove();
             
             // delete row in table
             $('#cart'+id).remove();
@@ -457,6 +464,10 @@
                 var b_price = document.getElementById("b_price"+i);
                 b_price.id = "b_price"+(i-1);  // using element properties
                 b_price.setAttribute("name", "b_price"+(i-1));  // using .setAttribute() method
+                
+                var b_stock = document.getElementById("b_stock"+i);
+                b_stock.id = "b_stock"+(i-1);  // using element properties
+                b_stock.setAttribute("name", "b_stock"+(i-1));  // using .setAttribute() method
 
                 $('#cart_id'+i).html(i);
 
@@ -477,6 +488,7 @@
             var uid = $('#uid').val();
             var total_item = $('#total_item').html();
             var total_price = $('#total_price').html();
+            var currency = $('#currency').val();
             
             var hiddenField = document.createElement("input");
                 hiddenField.setAttribute("type", "hidden");
@@ -501,11 +513,18 @@
                 hiddenField9.setAttribute("name", "num");
                 hiddenField9.setAttribute("id","num");
                 hiddenField9.setAttribute("value", num_item);
+                
+           var hiddenField11 = document.createElement("input");
+                hiddenField11.setAttribute("type", "hidden");
+                hiddenField11.setAttribute("name", "currency");
+                hiddenField11.setAttribute("id","currency");
+                hiddenField11.setAttribute("value", currency);
             
             form.appendChild(hiddenField);
             form.appendChild(hiddenField2);
             form.appendChild(hiddenField3);
             form.appendChild(hiddenField9);
+            form.appendChild(hiddenField11);
             
             //var parameter = "uid="+uid+"&total_item="+total_item+"&total_price="+total_price+"&num="+num_item;
             
@@ -583,6 +602,64 @@
             
             document.body.appendChild(form);
             form.submit();    
+        }
+                
+        // change $ to ฿
+        function change_to_baht() {
+            $.post('change_to_baht.php',
+            { 
+            }).done(function(result){
+                result = parseInt(result);
+                                
+                for(i=0; i<num_item; i++) {
+                    var tot_p = parseInt($('#b_total_price'+i).val());
+                    $('#b_total_price'+i).val(tot_p*result);
+                    $('#cart_total_price'+i).html("฿"+(tot_p*result));
+                    
+                    var pr = parseInt($('#b_price'+i).val());
+                    $('#b_price'+i).val(pr*result);
+                }
+                
+                var tot_p = parseInt($('#total_price').html());
+                $('#cart_total_price').html('฿'+(tot_p*result));
+                
+                $('#currency').val('฿');
+                
+                $('#sp_currency').html('฿');
+                var t =  parseInt($('#total_price').html());
+                $('#total_price').html(t*result);
+                
+                $('#change_currency').html('<a onclick="change_to_dollar()" style="cursor: pointer">Change to Dollar</a>');
+            });
+        }
+        
+                // change ฿ to $
+        function change_to_dollar() {
+            $.post('change_to_baht.php',
+            { 
+            }).done(function(result){
+                result = parseInt(result);
+                                
+                for(i=0; i<num_item; i++) {
+                    var tot_p = parseInt($('#b_total_price'+i).val());
+                    $('#b_total_price'+i).val(tot_p/result);
+                    $('#cart_total_price'+i).html("$"+(tot_p/result));
+                    
+                    var pr = parseInt($('#b_price'+i).val());
+                    $('#b_price'+i).val(pr/result);
+                }
+                
+                var tot_p = parseInt($('#total_price').html());
+                $('#cart_total_price').html('$'+(tot_p/result));
+                
+                $('#currency').val('$');
+                
+                $('#sp_currency').html('$');
+                var t =  parseInt($('#total_price').html());
+                $('#total_price').html(t/result);
+                
+                $('#change_currency').html('<a onclick="change_to_baht()" style="cursor: pointer">Change to Baht</a>');
+            });
         }
     </script>
 
@@ -717,7 +794,7 @@
                   if($username != "admin" && $username != "null") {
            ?>
                 <div class="" id="cart">
-                    Cart: $<span class="" id="total_price">0</span> (<span class="" id="total_item">0</span> items) <br/>
+                    Cart: <span id="sp_currency">$</span><span class="" id="total_price">0</span> (<span class="" id="total_item">0</span> items) <br/>
                     
                     <form method="post" action="" id="show_cart">
                         <input type="hidden" id="uid" name="uid" value="<?php echo $uid; ?>">
