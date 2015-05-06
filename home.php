@@ -185,7 +185,7 @@
                                     + '<br>&nbsp;&nbsp;&nbsp;&nbsp;<div id="bsave"></div>';
                             }
                             else if(username != "admin" && username != "null") {
-                                if(jsonObj[i].amount != 0) {
+                                if(jsonObj[i].amount > 0) {
                                     text = text + '<h2 class="" id="book_name">'+jsonObj[i].name+'</h2>'
                                         + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
                                         + '<h4 >Author: '+jsonObj[i].author+'</h4>'
@@ -208,7 +208,7 @@
                                 }
                             }
                             else {
-                                if(jsonObj[i].amount != 0) { 
+                                if(jsonObj[i].amount > 0) { 
                                     text = text + '<h2 class="" id="book_name">'+jsonObj[i].name+'</h2>'
                                        + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
                                        + '<h4 >Author: '+jsonObj[i].author+'</h4>'
@@ -223,7 +223,7 @@
                                        + '<h4 >Author: '+jsonObj[i].author+'</h4>'
                                        + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
                                        + '<h4>'+jsonObj[i].detail+'</h4> <br>'
-                                       + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>';
+                                       + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>'
                                        + '<h2 style="color: red">SOLD OUT</h2>';
                                }
                             }
