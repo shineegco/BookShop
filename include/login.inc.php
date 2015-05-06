@@ -55,18 +55,18 @@
                         // Set session variable for login status to true 
                        $_SESSION['username'] = $username;
 
-                       echo "username  ".$_SESSION['username']."<br>";////////////try//////////
+                       //echo "username  ".$_SESSION['username']."<br>";////////////try//////////
 
                        $row = mysqli_fetch_array($result);
 
 
                        $_SESSION['uid'] = $row['id'];
 
-                       echo "id  ".$_SESSION['uid']."<br>";////////////try//////////               
+                       //echo "id  ".$_SESSION['uid']."<br>";////////////try//////////               
 
                        $_SESSION['logged_in'] = true; 
 
-                       echo "logged_in  ".$_SESSION['logged_in']."<br>";////////////try//////////   
+                       //echo "logged_in  ".$_SESSION['logged_in']."<br>";////////////try//////////   
 
                        setcookie("uid", $row['id'], time() + (86400 * 30), "/");
 

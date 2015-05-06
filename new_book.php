@@ -126,24 +126,88 @@
         </div>
         <!-- /.container -->
     </nav>
-    <form method="post" action="new_book_background.php" enctype="multipart/form-data" class="formoid-solid-orange" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:480px;min-width:150px" method="post"><div class="title"><h2>Add New Book</h2></div>
-	<div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="text" name="book_name" placeholder="Book Name"/><span class="icon-place"></span></div></div>
-	<div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="text" name="book_acthor" placeholder="Author"/><span class="icon-place"></span></div></div>
-	<div class="element-textarea"><label class="title"></label><div class="item-cont"><textarea class="medium" name="book_detail" cols="20" rows="5" placeholder="Detail"></textarea><span class="icon-place"></span></div></div>
-	<div class="element-multiple"><label class="title"></label><div class="item-cont"><div class="large"><select data-no-selected="Nothing selected" name="catagory">
+    <form method="post" action="new_book_background.php" enctype="multipart/form-data" class="formoid-solid-orange" style="background-color:#FFFFFF;font-size:14px;font-family:'Roboto',Arial,Helvetica,sans-serif;color:#34495E;max-width:480px;min-width:150px" method="post">
+        <div class="title" style="background-color: #c35c08"><h2>Add New Book</h2></div>
+        
+	<div class="element-input">
+            <label class="title"></label>
+            <div class="item-cont">
+                <input class="large" type="text" name="book_name" placeholder="Book Name"/>
+                <span class="icon-place"></span>
+            </div>
+        </div>
+        
+	<div class="element-input">
+            <label class="title"></label>
+            <div class="item-cont">
+                <input class="large" type="text" name="book_acthor" placeholder="Author"/>
+                <span class="icon-place"></span>
+            </div>
+        </div>
+        
+	<div class="element-textarea">
+            <label class="title"></label>
+            <div class="item-cont">
+                <textarea class="medium" name="book_detail" cols="20" rows="5" placeholder="Detail"></textarea>
+                <span class="icon-place"></span>
+            </div>
+        </div>
+        
+	<div class="element-multiple">
+            <label class="title"></label>
+            <div class="item-cont">
+                <div class="large">
+                    <select data-no-selected="Nothing selected" name="catagory">
 
-		<option value="1">Food & Drink</option>
-		<option value="2">History</option>
-		<option value="3">Horror</option>
-                <option value="4">Education Studies & Teaching</option>   
-                    </select><span class="icon-place"></span></div></div></div>
-	<div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="text" name="book_price" placeholder="Price"/><span class="icon-place"></span></div></div>
-	<div class="element-input"><label class="title"></label><div class="item-cont"><input class="large" type="text" name="book_amount" placeholder="Amount"/><span class="icon-place"></span></div></div>
-	<div class="element-file"><label class="title"></label><div class="item-cont"><label class="large" ><div class="button">Choose File</div><input type="file" class="file_input" name="fileToUpload" id="fileToUpload" /><div class="file_text">Attach Cover</div><span class="icon-place"></span></label></div></div>
-        <div class="submit"><input type="submit" value="Submit"/></div></form><p class="frmd"><a href="http://formoid.com/v29.php">javascript form validation</a> Formoid.com 2.9</p><script type="text/javascript" src="add_book/formoid1/formoid-solid-orange.js"></script>
+                        <option value="1">Food & Drink</option>
+                        <option value="2">History</option>
+                        <option value="3">Horror</option>
+                        <option value="4">Education Studies & Teaching</option>   
+                    </select>
+                    <span class="icon-place"></span>
+                </div>
+            </div>
+        </div>
+        
+	<div class="element-input">
+            <label class="title"></label>
+            <div class="item-cont">
+                <input class="large" type="text" name="book_price" placeholder="Price"/>
+                <span class="icon-place"></span>
+            </div>
+        </div>
+        
+	<div class="element-input">
+            <label class="title"></label>
+            <div class="item-cont">
+                <input class="large" type="text" name="book_amount" placeholder="Amount"/>
+                <span class="icon-place"></span>
+            </div>
+        </div>
+        
+	<div class="element-file">
+            <label class="title"></label>
+            <div class="item-cont">
+                <label class="large" >
+                    <div class="button" style="background-color: #c35c08">Choose File</div>
+                    <input type="file" class="file_input" name="fileToUpload" id="fileToUpload" />
+                    <div class="file_text">Attach Cover</div><span class="icon-place"></span>
+                </label>
+            </div>
+        </div>
+        
+        <div class="submit">
+            <input type="submit" style="background-color: #c35c08" value="Submit"/>
+        </div>
+    
+    </form>
+    
+    <p class="frmd"><a href="http://formoid.com/v29.php">javascript form validation</a> Formoid.com 2.9</p>
+    
+    <script type="text/javascript" src="add_book/formoid1/formoid-solid-orange.js"></script>
 <!-- Stop Formoid form-->
     
-    
+<br>
     
 </body>
 </html>

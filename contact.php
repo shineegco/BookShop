@@ -128,38 +128,38 @@
     <!-- Page Content -->
     <div class="container">
 
-        <section id="contact">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-12 text-center">
-        <h2 class="section-heading">Contact</h2>
-        <div class="line"></div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <h5><i class="fa fa-map-marker"></i> Address</h5>
-        <p>The Faculty of Engineering,Mahidol University 25/25 Phutthamomthon 4 Rd., Salaya,Nakhon Pathom 73170,Thailand</p>
-      </div>
-      <div class="col-md-4">
-        <h5><i class="fa fa-envelope-o"></i> Email</h5>
-        <p>kewalee.ass@student.mahidol.edu</p>
-        <p>arnun.sho@student.mahidol.edu</p>
-      </div>
-      <div class="col-md-4">
-        <h5><i class="fa fa-phone"></i> Phone</h5>
-      <p>089-665-6656</p>
-        081-426-5458
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-8 col-lg-offset-2 text-center">
-        <p class="contact text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
-      </div>
-    </div>
-  
-  </div>
-</section>
+        <section id="contact" style="background-color: #d56911">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 text-center">
+              <h2 class="section-heading">Contact</h2>
+              <div class="line"></div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <h5><i class="fa fa-map-marker"></i> Address</h5>
+              <p>The Faculty of Engineering,Mahidol University 25/25 Phutthamomthon 4 Rd., Salaya,Nakhon Pathom 73170,Thailand</p>
+            </div>
+            <div class="col-md-4">
+              <h5><i class="fa fa-envelope-o"></i> Email</h5>
+              <p>kewalee.ass@student.mahidol.edu</p>
+              <p>arnun.sho@student.mahidol.edu</p>
+            </div>
+            <div class="col-md-4">
+              <h5><i class="fa fa-phone"></i> Phone</h5>
+            <p>089-665-6656</p>
+              081-426-5458
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 text-center">
+              <p class="contact text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aut eaque, laboriosam veritatis, quos non quis ad perspiciatis, totam corporis ea, alias ut unde.</p>
+            </div>
+          </div>
+
+        </div>
+      </section>
         
        
     </div>

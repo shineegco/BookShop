@@ -842,6 +842,7 @@
                   if($username != "admin" && $username != "null") {
            ?>
                 <div class="" id="cart">
+                    <img src="image/cart1.png" width="60" height="50">
                     Cart: <span id="sp_currency">$</span><span class="" id="total_price">0</span> (<span class="" id="total_item">0</span> items) <br/>
                     
                     <form method="post" action="" id="show_cart">
