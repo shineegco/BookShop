@@ -1,5 +1,5 @@
 <?php
-    $url = "http://www.webservicex.net/CurrencyConvertor.asmx/oCnversionRate?FromCurrency=USD&ToCurrency=THB";
+    $url = "http://www.webservicex.net/CurrencyConvertor.asmx/ConversionRate?FromCurrency=USD&ToCurrency=THB";
     
     $doc = new DOMDocument();
     $doc->load($url);

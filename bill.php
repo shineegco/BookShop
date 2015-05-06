@@ -46,7 +46,7 @@
     // create pdf file
     $pdf = new FPDF();
     $pdf->AddPage();
-    
+        
     //set font
     $pdf->SetFont('Arial','B',24);
     
@@ -150,6 +150,11 @@
             
             $result_tran = mysqli_query($link, $sql_book);
             
+            
+            if($currency != '$') {
+                $currency = "Baht";
+            }
+            
             // item
             $pdf->SetFont('Arial','',16);
             $pdf->Cell(10);
@@ -159,7 +164,7 @@
             $pdf->Cell(55);
             $pdf->Cell(10,10,$bamount,0,0,'L');
             $pdf->Cell(20);
-            $pdf->Cell(10,10,$price_temp,0,0,'L');
+            $pdf->Cell(10,10,($currency.$btotal_price),0,0,'L');
             
             // Line break
             $pdf->Ln(15);

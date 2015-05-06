@@ -657,6 +657,8 @@
             $.post('change_to_baht.php',
             { 
             }).done(function(result){
+                //alert(result);/////////try///////
+                
                 result = parseInt(result);
                                 
                 for(i=0; i<num_item; i++) {
@@ -686,6 +688,8 @@
             $.post('change_to_baht.php',
             { 
             }).done(function(result){
+                //alert(result);/////////try///////
+                
                 result = parseInt(result);
                                 
                 for(i=0; i<num_item; i++) {
