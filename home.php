@@ -94,18 +94,34 @@
                         //alert("HAVE");//////////try/////////
                     
                         for(i in jsonObj) {
-                             text =  '<div class="col-sm-4 col-lg-4 col-md-4">'
-                                    + '<div class="thumbnail">'
-                                    + '<img src="'+jsonObj[i].picture+'" height="500px" width="330px" alt="" style="cursor: pointer; max-width: 100%; max-height: 100%; background-size: contain;" onclick="show_detail('+jsonObj[i].id_book+')">'
-                                    + '<div class="caption">'
-                                    + '<h4 style="cursor: pointer" onclick="show_detail('+jsonObj[i].id_book+')">'+jsonObj[i].name+'</h4>'
-                                    + '<h5>Author: '+jsonObj[i].author+'</h5>'
-                                    + '<h5>category: '+jsonObj[i].name_cate+'</h5>'
-                                    + '<h4 class="pull-right"> $'+jsonObj[i].price+'</h4>'
-                                    + '<h5>In stock: '+jsonObj[i].amount+'</h5>'
-                                    + '</div>'
-                                    + '</div>'
-                                    + '</div>';
+                            if(jsonObj[i].amount > 0) {
+                                text =  '<div class="col-sm-4 col-lg-4 col-md-4">'
+                                       + '<div class="thumbnail">'
+                                       + '<img src="'+jsonObj[i].picture+'" height="500px" width="330px" alt="" style="cursor: pointer; max-width: 100%; max-height: 100%; background-size: contain;" onclick="show_detail('+jsonObj[i].id_book+')">'
+                                       + '<div class="caption">'
+                                       + '<h4 style="cursor: pointer" onclick="show_detail('+jsonObj[i].id_book+')">'+jsonObj[i].name+'</h4>'
+                                       + '<h5>Author: '+jsonObj[i].author+'</h5>'
+                                       + '<h5>category: '+jsonObj[i].name_cate+'</h5>'
+                                       + '<h4 class="pull-right"> $'+jsonObj[i].price+'</h4>'
+                                       + '<h5>In stock: '+jsonObj[i].amount+'</h5>'
+                                       + '</div>'
+                                       + '</div>'
+                                       + '</div>';
+                            }
+                            else {
+                                text =  '<div class="col-sm-4 col-lg-4 col-md-4">'
+                                       + '<div class="thumbnail">'
+                                       + '<img src="'+jsonObj[i].picture+'" height="500px" width="330px" alt="" style="cursor: pointer; max-width: 100%; max-height: 100%; background-size: contain;" onclick="show_detail('+jsonObj[i].id_book+')">'
+                                       + '<div class="caption">'
+                                       + '<h4 style="cursor: pointer" onclick="show_detail('+jsonObj[i].id_book+')">'+jsonObj[i].name+'</h4>'
+                                       + '<h5>Author: '+jsonObj[i].author+'</h5>'
+                                       + '<h5>category: '+jsonObj[i].name_cate+'</h5>'
+                                       + '<h4 class="pull-right"> $'+jsonObj[i].price+'</h4>'
+                                       + '<h4 style="color: red">SOLD OUT</h4>'
+                                       + '</div>'
+                                       + '</div>'
+                                       + '</div>';
+                            }
 
                             //alert(text);//////////try/////////
 
@@ -168,18 +184,50 @@
                                     + '&nbsp;&nbsp;<input type="button" id="delete" value="Delete" onclick="bdelete(\''+jsonObj[i].id_book+'\',\''+jsonObj[i].name+'\')">'
                                     + '<br>&nbsp;&nbsp;&nbsp;&nbsp;<div id="bsave"></div>';
                             }
-                            else {
-                                text = text + '<h2 class="" id="book_name">'+jsonObj[i].name+'</h2>'
-                                    + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
-                                    + '<h4 >Author: '+jsonObj[i].author+'</h4>'
-                                    + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
-                                    + '<h4>In stock: <span id="book_stock">'+jsonObj[i].amount+'</span></h4> <br>'
-                                    + '<h4>'+jsonObj[i].detail+'</h4> <br>'
-                                    + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>'
-                                    + '&nbsp;&nbsp;&nbsp;Amount: <input type="number" class="" id="book_amount" min="1" max="'+jsonObj[i].amount+'" onchange="cal_price(this.value,'+jsonObj[i].price+')">'
-                                    + '&nbsp;&nbsp;&nbsp;Price: <input type="text" id="book_total_price" size="5" value="" readonly>'
-                                    + '&nbsp;&nbsp;<input type="button" class="" value="Add to cart" onclick="add_to_cart()">';
+                            else if(username != "admin" && username != "null") {
+                                if(jsonObj[i].amount != 0) {
+                                    text = text + '<h2 class="" id="book_name">'+jsonObj[i].name+'</h2>'
+                                        + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
+                                        + '<h4 >Author: '+jsonObj[i].author+'</h4>'
+                                        + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
+                                        + '<h4>In stock: <span id="book_stock">'+jsonObj[i].amount+'</span></h4> <br>'
+                                        + '<h4>'+jsonObj[i].detail+'</h4> <br>'
+                                        + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>'
+                                        + '&nbsp;&nbsp;&nbsp;Amount: <input type="number" class="" id="book_amount" min="1" max="'+jsonObj[i].amount+'" onchange="cal_price(this.value,'+jsonObj[i].price+')">'
+                                        + '&nbsp;&nbsp;&nbsp;Price: <input type="text" id="book_total_price" size="5" value="" readonly>'
+                                        + '&nbsp;&nbsp;<input type="button" class="" value="Add to cart" onclick="add_to_cart()">';
+                                }
+                                else {
+                                    text = text + '<h2 class="" id="book_name">'+jsonObj[i].name+'</h2>'
+                                        + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
+                                        + '<h4 >Author: '+jsonObj[i].author+'</h4>'
+                                        + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
+                                        + '<h4>'+jsonObj[i].detail+'</h4> <br>'
+                                        + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>'
+                                        + '<h2 style="color: red">SOLD OUT</h2>';
+                                }
                             }
+                            else {
+                                if(jsonObj[i].amount != 0) { 
+                                    text = text + '<h2 class="" id="book_name">'+jsonObj[i].name+'</h2>'
+                                       + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
+                                       + '<h4 >Author: '+jsonObj[i].author+'</h4>'
+                                       + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
+                                       + '<h4>In stock: <span id="book_stock">'+jsonObj[i].amount+'</span></h4> <br>'
+                                       + '<h4>'+jsonObj[i].detail+'</h4> <br>'
+                                       + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>';
+                               }
+                               else {
+                                   text = text + '<h2 class="" id="book_name">'+jsonObj[i].name+'</h2>'
+                                       + '<input type="hidden" id="book_id" value="'+jsonObj[i].id_book+'">'
+                                       + '<h4 >Author: '+jsonObj[i].author+'</h4>'
+                                       + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
+                                       + '<h4>'+jsonObj[i].detail+'</h4> <br>'
+                                       + '<h4><span class="" id="book_price"> $'+jsonObj[i].price+'</span>';
+                                       + '<h2 style="color: red">SOLD OUT</h2>';
+                               }
+                            }
+                            
                                     
                                 text = text + '</h4>'
                                     + '</div>'
@@ -831,7 +879,18 @@
                                 <h5>Author: <?php echo $row['author']; ?></h5>
                                 <h5>category: <?php echo $row['name_cate']; ?></h5>
                                 <h4 class="pull-right"> $<?php echo $row['price']; ?> </h4>
+                     <?php
+                            if($row['amount'] > 0) {
+                     ?>
                                 <h5>In stock: <?php echo $row['amount']; ?></h5>
+                     <?php
+                            }
+                            else {
+                     ?>
+                                <h4 style="color: red">SOLD OUT</h4>
+                     <?php
+                            }
+                     ?>
                             </div>
                         </div>
                     </div>
