@@ -90,12 +90,6 @@
     mysqli_close($link);
 
     echo "success add to Table";
-
-   
-   
-   
-   
-   
    
 ?>
 

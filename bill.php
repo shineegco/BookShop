@@ -165,6 +165,40 @@
             $pdf->Ln(15);
             
      }
+     
+     // summary
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(40);
+    $pdf->Cell(10,10,"Total",0,0,'L');
+    $pdf->SetFont('Arial','',16);
+    $pdf->Cell(85);
+    $pdf->Cell(10,10,$total_item,0,0,'L');
+    $pdf->Cell(20);
+    $pdf->Cell(10,10,($currency.$total_price),0,0,'L');
+
+    // Line break
+    $pdf->Ln(30);
+    
+    // contact
+    $pdf->SetFont('Arial','',10);
+    $pdf->Cell(105);
+    $pdf->Cell(10,10,'Shiro Store  Faculty of Engineering,Mahidol University,',0,0,'L');
+    $pdf->Ln(10);
+    
+    $pdf->Cell(35);
+    $pdf->Cell(10,10,'25/25 Phutthamomthon 4 Rd.Salaya,Nakhon Pathom 73170,Thailand  089-665-6656, 081-426-5458',0,0,'L');
+    $pdf->Ln(10);
+ /*   
+    $pdf->Cell(135);
+    $pdf->Cell(10,10,'25/25 Phutthamomthon 4 Rd.,',0,0,'L');
+    $pdf->Ln(10);
+    
+    $pdf->Cell(135);
+    $pdf->Cell(10,10,'Salaya,Nakhon Pathom 73170,Thailand',0,0,'L');
+    $pdf->Ln(10);
+ */   
+    $pdf->Cell(145);
+    $pdf->Cell(10,10,'',0,0,'L');
     
     $pdf->Output();
 ?>
