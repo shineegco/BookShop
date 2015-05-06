@@ -202,16 +202,3 @@
     
     $pdf->Output();
 ?>
-
-            <tr>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td id="cart_total_item">
-                   <?php echo $total_item; ?>
-                </td>
-                <td id="cart_total_price">
-                   <?php echo $currency.$total_price; ?>
-                </td>
-            </tr>

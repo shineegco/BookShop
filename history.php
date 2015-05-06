@@ -230,7 +230,7 @@
                     var jsonObj = JSON.parse(xmlhttp.responseText);
                     
                     if(jsonObj.length == 0) {
-                       alert("Data not found");
+                       //alert("Data not found");
                     }
                     else{
                         //alert("HAVE");//////////try/////////
