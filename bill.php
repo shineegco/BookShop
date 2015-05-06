@@ -9,7 +9,7 @@
     if (check_login_status() == false) { 
              redirect('login.php'); 
     } 
-    
+ 
      //include
     require_once('include/config.inc.php');
     
@@ -39,120 +39,86 @@
     
     // get current date
     $date = date("Y-m-d");
+      
+    //include fpdf
+    require('fpdf/fpdf.php');
     
-?>
-
-<html lang="en">
-
-<head>
-
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-    <title>Shiro Store</title>
-
-    <!-- Bootstrap Core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="css/shop-homepage.css" rel="stylesheet">
-        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+    // create pdf file
+    $pdf = new FPDF();
+    $pdf->AddPage();
     
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+    //set font
+    $pdf->SetFont('Arial','B',24);
     
-    <script src="js/jspdf.js"></script>
+    // head
+    $pdf->Cell(50);
+    $pdf->Cell(10,10,'Receive',0,0,'C');
+    // Line break
+    $pdf->Ln(20);
     
-    <script>
-        $(function(){
-            var doc = new jsPDF();
-            var specialElementHandlers = {
-                '#editor': function (element, renderer) {
-                    return true;
-                }
-            };
-
-            $('#ok').click(function () {
-
-                 doc.fromHTML($('#bill').get(0), 15, 15, {
-                        'width': 170, 
-                        'elementHandlers': specialElementHandlers
-                });
-            });
-         });
-    </script>
-
-</head>
-
-<body>
+    //firstname
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(10);
+    $pdf->Cell(10,10,'First name:',0,0,'L');
+    $pdf->Cell(38);
+    $pdf->SetFont('Arial','',16);
+    $pdf->Cell(10,10,$name,0,0,'C');
     
-<center>
-    <input type="hidden" id="uid" value="<?php echo $uid; ?>">
-    <input type="hidden" id="total_item" value="<?php echo $total_item; ?>">
-    <input type="hidden" id="total_price" value="<?php echo $total_price; ?>">
-    <input type="hidden" id="num" value="<?php echo $num; ?>">
+    //lasttname
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(30);
+    $pdf->Cell(10,10,'Last name:',0,0,'L');
+    $pdf->Cell(25);
+    $pdf->SetFont('Arial','',16);
+    $pdf->Cell(10,10,$surname,0,0,'L');
     
-    <div id="bill" style="width: 1000px;">
-        <h2>Receive</h2>
-        <br>
-        <br>
-        <table style="border: 0" class="table table-striped table-bordered table-hover" id="dataTables-example">
-            <tr>
-                <td>
-                    First name:
-                </td>
-                <td>
-                   <?php echo $name; ?>
-                </td>
-                <td>
-                    Last name:
-                </td>
-                <td>
-                   <?php echo $surname; ?>
-                </td>
-            </tr>
-            
-            <tr>
-                <td>
-                    Address:
-                </td>
-                <td colspan="3">
-                   <?php echo $address; ?>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    Phone:
-                </td>
-                <td colspan="3">
-                   <?php echo $phone; ?>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4">
-                    Order:
-                </td>
-            </tr>
-            <tr>
-                <td>
-                </td>
-                <td>
-                   Book's name
-                </td>
-                <td>
-                   Amount
-                </td>
-                <td>
-                   Price
-                </td>
-            </tr>
-<?php
-        for($i=0; $i<$num; $i++) {
+    // Line break
+    $pdf->Ln(15);
+    
+    //address
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(10);
+    $pdf->Cell(10,10,'Address:',0,0,'L');
+    $pdf->Cell(20);
+    $pdf->SetFont('Arial','',16);
+    $pdf->Cell(10,10,$address,0,0,'L');
+    
+    // Line break
+    $pdf->Ln(15);
+    
+    //address
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(10);
+    $pdf->Cell(10,10,'Phone:',0,0,'L');
+    $pdf->Cell(15);
+    $pdf->SetFont('Arial','',16);
+    $pdf->Cell(10,10,$phone,0,0,'L');
+    
+    // Line break
+    $pdf->Ln(20);
+    
+    // order
+    $pdf->SetFont('Arial','B',20);
+    $pdf->Cell(20);
+    $pdf->Cell(10,10,'Order:',0,0,'L');
+    
+    // Line break
+    $pdf->Ln(15);
+    
+    // order title
+    $pdf->SetFont('Arial','B',16);
+    $pdf->Cell(40);
+    $pdf->Cell(10,10,'Book\'s name',0,0,'L');
+    $pdf->Cell(75);
+    $pdf->Cell(10,10,'Amount',0,0,'L');
+    $pdf->Cell(30);
+    $pdf->Cell(10,10,'Price',0,0,'L');
+    
+    // Line break
+    $pdf->Ln(15);
+    
+    // item in order
+     for($i=0; $i<$num; $i++) {
             $bid_n = (string)"bid".$i;
             $bid = $_POST[$bid_n];
             
@@ -171,41 +137,38 @@
             $bstock_n = (string)"bstock".$i;
             $bstock = $_POST[$bstock_n];
             
-            $price_temp = (string)$currency.$bprice;
+            $price_temp = (string)$currency.$btotal_price;
             
             //save transaction into DB
-            $sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
-                    . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
+            //$sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
+            //        . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
             
-            $result_tran = mysqli_query($link, $sql_tran);
+            //$result_tran = mysqli_query($link, $sql_tran);
             
             //update book in stock
-            $sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
+            //$sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
             
-            $result_tran = mysqli_query($link, $sql_book);
+            //$result_tran = mysqli_query($link, $sql_book);
             
+            // item
+            $pdf->SetFont('Arial','',16);
+            $pdf->Cell(10);
+            $pdf->Cell(10,10,($i+1),0,0,'L');
+            $pdf->Cell(10);
+            $pdf->Cell(50,10,$bname,0,0,'L');
+            $pdf->Cell(55);
+            $pdf->Cell(10,10,$bamount,0,0,'L');
+            $pdf->Cell(20);
+            $pdf->Cell(10,10,$price_temp,0,0,'L');
+            
+            // Line break
+            $pdf->Ln(15);
+            
+     }
+    
+    $pdf->Output();
 ?>
-            <input type="hidden" id="id_book<?php echo $i;?>" value="<?php echo $bid; ?>">
-            <input type="hidden" id="b_total_price<?php echo $i;?>" value="<?php echo $btotal_price; ?>">
-            <input type="hidden" id="b_amount<?php echo $i;?>" value="<?php echo $bamount; ?>">
-            <input type="hidden" id="b_stock<?php echo $i;?>" value="<?php echo $bstock; ?>">
-            <tr>
-                <td>
-                    <?php echo $i+1; ?>
-                </td>
-                <td>
-                   <?php echo $bname; ?>
-                </td>
-                <td>
-                   <?php echo $bamount; ?>
-                </td>
-                <td id="cart_total_price<?php echo $i; ?>">
-                   <?php echo $currency.$btotal_price; ?>
-                </td>
-            </tr>
-<?php
-        }
-?>
+
             <tr>
                 <td>
                 </td>
@@ -218,17 +181,3 @@
                    <?php echo $currency.$total_price; ?>
                 </td>
             </tr>
-      
-        </table>
-        
-        <div class="pull-right">
-            <a id="ok">OK</a>
-            &nbsp;&nbsp;
-            <a href="home.php">Cancel</a>
-        </div>
-    </div>
-    
-    
-</center>
-</body>
-</html>
