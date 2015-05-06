@@ -51,8 +51,8 @@
     $pdf->SetFont('Arial','B',24);
     
     // head
-    $pdf->Cell(50);
-    $pdf->Cell(10,10,'Receive',0,0,'C');
+    $pdf->Cell(92);
+    $pdf->Cell(10,10,'Receipt',0,0,'C');
     // Line break
     $pdf->Ln(20);
     
@@ -140,15 +140,15 @@
             $price_temp = (string)$currency.$btotal_price;
             
             //save transaction into DB
-            //$sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
-            //        . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
+            $sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
+                    . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
             
-            //$result_tran = mysqli_query($link, $sql_tran);
+            $result_tran = mysqli_query($link, $sql_tran);
             
             //update book in stock
-            //$sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
+            $sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
             
-            //$result_tran = mysqli_query($link, $sql_book);
+            $result_tran = mysqli_query($link, $sql_book);
             
             // item
             $pdf->SetFont('Arial','',16);

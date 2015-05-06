@@ -28,7 +28,7 @@
     $result = mysqli_query($link, $sql_cat);
     
     // find book in DB
-    $sql_book = "SELECT * FROM category C, book B WHERE C.id_category=B.id_category AND C.id_category=1";
+    $sql_book = "SELECT * FROM category C, book B WHERE C.id_category=B.id_category AND C.id_category=1 AND remove=0";
     $result_book = mysqli_query($link, $sql_book);
 ?>
 

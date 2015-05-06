@@ -313,6 +313,13 @@
         try{
             // insert to table
             $result = mysqli_query($link, $sql_book);
+            
+            echo "success add to Table";
+?>
+        <script>
+                alert("Success");
+        </script>
+<?php
         }catch(Exception $e){
             echo "fail";
 ?>
@@ -325,13 +332,8 @@
         //close connect
         mysqli_close($link);
 
-        echo "success add to Table";
 ?>     
-<script>
-        alert("Success");
-</script>
-<?php
-?>
+
     
 </body>
 </html>
