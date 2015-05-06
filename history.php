@@ -256,5 +256,13 @@
             xmlhttp.send();
         }
     </script>
+    
+     <footer>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Copyright &copy; Shiro Store Co,.Ltd 2014</p>
+                </div>
+            </div>
+        </footer>
 </body>
 </html>
