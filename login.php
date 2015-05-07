@@ -154,7 +154,7 @@
 								</form>
 								<form id="register-form" action="register.php" method="post" role="form" style="display: none;">
 									<div class="form-group">
-                                                                            <input type="text" name="username" id="username" tabindex="1" required="" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" class="form-control" placeholder="Username" value="" onchange="checkUsername(this.value)" autofocus>
+                                                                            <input type="text" name="username" id="username1" tabindex="1" required="" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" class="form-control" placeholder="Username" value="" onchange="checkUsername(this.value)" autofocus>
 									</div>
 									<div class="form-group">
                                                                             <input type="email" name="email" id="email" tabindex="1" required="" class="form-control" placeholder="Email Address" value="">
@@ -239,9 +239,9 @@
                 alert("Username is not available");
             }
             else {
-                alert("Username is available");
-                 $('#username').val('');
-                $('#username').focus();
+                alert("Username is available"); 
+                $('#username1').focus();
+                $('#username1').val("");
             }
         });
     }
