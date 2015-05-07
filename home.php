@@ -407,7 +407,6 @@
                 
             }
             var stock = parseInt($('#book_stock').html());
-            alert
             var stock_new = stock - b_amount;
             
             if(error != "") {
@@ -416,37 +415,63 @@
             else {
                 //alert("b_id  "+b_id+"  b_name  "+b_name+"  b_total_price  "+b_total_price+"  b_amount  "+b_amount+"  b_price  "+b_price);/////try//////
 
-                // check order 
+                // check item has in order
+                var check = 0;
                 for(i=0; i<num_item; i++) {
-                    $('#b_id'+i).val() == b_id) {
+                    if($('#b_id'+i).val() == b_id) {
+                        // check in stock
+                        //alert("stock  "+parseInt($('#b_stock'+i).val())+"  amount  "+b_amount);///////////////try///////////
+                        if(parseInt($('#b_stock'+i).val()) < b_amount) {
+                            alert("Please recheck your order in stock.");
+                            return;
+                        }
+                    
+                        // add total price, amount and change in stock
                         var tp = parseInt($('#b_total_price'+i).val());
-                        $('#b_total_price'+i).val();
+                        $('#b_total_price'+i).val(b_total_price+tp);
                         
+                        var am = parseInt($('#b_amount'+i).val());
+                        $('#b_amount'+i).val(am+b_amount);
+                        
+                        var st = parseInt($('#b_stock'+i).val());
+                        $('#b_stock'+i).val(st-b_amount);
+                        
+                        // show total price and total item to order
+                        var tot_p = parseInt($('#total_price').html());
+                        $('#total_price').html(tot_p+b_total_price);
+
+                        var tot_i = parseInt($('#total_item').html());
+                        $('#total_item').html(tot_i+b_amount);
+                        
+                        break;                        
                     }
-                    else {
-                        text = '<input type="hidden" id="b_id'+num_item+'" name="b_id'+num_item+'" value="'+b_id+'">'
+                    
+                    check++;
+                }
+                if(check == num_item) {
+                     text = '<input type="hidden" id="b_id'+num_item+'" name="b_id'+num_item+'" value="'+b_id+'">'
                             + '<input type="hidden" id="b_name'+num_item+'" name="b_name'+num_item+'" value="'+b_name+'">'
                             + '<input type="hidden" id="b_total_price'+num_item+'" name="b_total_price'+num_item+'" value="'+b_total_price+'">'
                             + '<input type="hidden" id="b_amount'+num_item+'" name="b_amount'+num_item+'" value="'+b_amount+'">'
                             + '<input type="hidden" id="b_price'+num_item+'" name="b_price'+num_item+'" value="'+b_price+'">'
                             + '<input type="hidden" id="b_stock'+num_item+'" name="b_stock'+num_item+'" value="'+stock_new+'">';
 
-                        // add item to cart list
-                        $('#cart_list').append(text);
-                    }
+                    // add item to cart list
+                    $('#cart_list').append(text);
+                        
+                    // show total price and total item to order
+                    var tot_p = parseInt($('#total_price').html());
+                    $('#total_price').html(tot_p+b_total_price);
+
+                    var tot_i = parseInt($('#total_item').html());
+                    $('#total_item').html(tot_i+b_amount);
+
+                    var sum = parseInt($('#sum').val());
+                    $('#sum').val(sum+1);
+
+                    num_item++;
                 }
                 
-                // show total price and total item to order
-                var tot_p = parseInt($('#total_price').html());
-                $('#total_price').html(tot_p+b_total_price);
-                
-                var tot_i = parseInt($('#total_item').html());
-                $('#total_item').html(tot_i+b_amount);
-                
-                var sum = parseInt($('#sum').val());
-                $('#sum').val(sum+1);
-                
-                num_item++;
             }
         }
         
@@ -506,7 +531,7 @@
             $('#book').append(head);
             
             if(num_item > 0) {
-                span = '<h4><a class="pull-right" style="cursor: pointer;" onclick="check_out()">Checkout</a></h4>';
+                span = '<h4><a class="pull-right" style="cursor: pointer;" id="checkout" onclick="check_out()">Checkout</a></h4>';
 
                 $('#book').append(span);
             }
@@ -715,20 +740,24 @@
                     $('#b_total_price'+i).val(tot_p*result);
                     $('#cart_total_price'+i).html("฿"+(tot_p*result));
                     
-                    var pr = parseInt($('#b_price'+i).val());
-                    $('#b_price'+i).val(pr*result);
+                    //var pr = parseInt($('#b_price'+i).val());
+                    //$('#b_price'+i).val(pr*result);
                 }
                 
                 var tot_p = parseInt($('#total_price').html());
                 $('#cart_total_price').html('฿'+(tot_p*result));
                 
-                $('#currency').val('฿');
+                //$('#currency').val('฿');
                 
-                $('#sp_currency').html('฿');
-                var t =  parseInt($('#total_price').html());
-                $('#total_price').html(t*result);
+                //$('#sp_currency').html('฿');
+                //var t =  parseInt($('#total_price').html());
+                //$('#total_price').html(t*result);
                 
+                // add link change to dollar
                 $('#change_currency').html('<a onclick="change_to_dollar()" style="cursor: pointer">Change to Dollar</a>');
+                
+                // hide button checkout
+                $('#checkout').hide();
             });
         }
         
@@ -746,20 +775,23 @@
                     $('#b_total_price'+i).val(tot_p/result);
                     $('#cart_total_price'+i).html("$"+(tot_p/result));
                     
-                    var pr = parseInt($('#b_price'+i).val());
-                    $('#b_price'+i).val(pr/result);
+                    //var pr = parseInt($('#b_price'+i).val());
+                    //$('#b_price'+i).val(pr/result);
                 }
                 
                 var tot_p = parseInt($('#total_price').html());
-                $('#cart_total_price').html('$'+(tot_p/result));
+                $('#cart_total_price').html('$'+(tot_p));
                 
-                $('#currency').val('$');
+                //$('#currency').val('$');
                 
-                $('#sp_currency').html('$');
-                var t =  parseInt($('#total_price').html());
-                $('#total_price').html(t/result);
+                //$('#sp_currency').html('$');
+                //var t =  parseInt($('#total_price').html());
+                //$('#total_price').html(t/result);
                 
+                // add link change to baht
                 $('#change_currency').html('<a onclick="change_to_baht()" style="cursor: pointer">Change to Baht</a>');
+                
+                $('#checkout').show();
             });
         }
     </script>

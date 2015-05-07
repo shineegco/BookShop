@@ -1,6 +1,9 @@
 <?php
     //include
     require_once('include/config.inc.php');
+    
+    // Include required functions file 
+    require_once('include/functions.inc.php');
 
     $username = $_POST['username'];
     $password = $_POST['pass'];

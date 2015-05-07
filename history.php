@@ -241,7 +241,7 @@
                                 + '<td>'+jsonObj[i].name+'</td>'
                                 + '<td>'+jsonObj[i].author+'</td>'
                                 + '<td class="center">'+jsonObj[i].amount+'</td>'
-                                + '<td class="center">'+jsonObj[i].price+'</td>'
+                                + '<td class="center">$'+jsonObj[i].price+'</td>'
                                 + '<td class="center">'+jsonObj[i].date+'</td>'
                                 + '</tr>';
 

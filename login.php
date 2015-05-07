@@ -154,7 +154,7 @@
 								</form>
 								<form id="register-form" action="register.php" method="post" role="form" style="display: none;">
 									<div class="form-group">
-                                                                            <input type="text" name="username" id="username" tabindex="1" required="" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" class="form-control" placeholder="Username" value="" autofocus>
+                                                                            <input type="text" name="username" id="username" tabindex="1" required="" pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{1,20}$" class="form-control" placeholder="Username" value="" onchange="checkUsername(this.value)" autofocus>
 									</div>
 									<div class="form-group">
                                                                             <input type="email" name="email" id="email" tabindex="1" required="" class="form-control" placeholder="Email Address" value="">
@@ -226,111 +226,25 @@
             $('#confirm_password').focus();
         }
     }
-/*    
-    function register() {
-        var patt = new RegExp("[a-zA-Z0-9]");
-        var patt_phone = new RegExp("[0-9]{10}");
-        var patt_user = new RegExp("^[a-zA-Z0-9-_]{1,20}$");
-        var patt_name = new RegExp("[a-zA-Z]+");
-        var patt_addr = new RegExp("[#$%^*?!~`]");
-        var error = "";
+    function checkUsername(user) {
+        //alert(user);//////////////try/////////
         
-        var username = $('#username').val();
-        alert("user  "+username+"  "+patt_user.test(username));////////////try/////////
-        if(!patt_user.test(username)) {
-            error = error + " username";
-        }
-        
-        var password = $('#password').val();
-        alert("password  "+password+"  "+patt.test(password));////////////try/////////
-        if(!patt.test(password)) {
-            error = error + " password";
-        }
-        
-        var password_conf = $('#confirm_password').val;
-        if(!password_conf) {
-            error = error + " confirm password"
-        }
-        
-        var email = $('#email').val();
-        if(!email) {
-            error = error + " email";
-        }
-        
-        var name = $('#firstname').val();
-        alert("name  "+name+"  "+patt_name.test(name));////////////try/////////
-        if(!patt_name.test(name)) {
-            error = error + " name";
-        }
-        
-        var surname = $('#lastname').val();
-        alert("surname  "+surname+"  "+patt_name.test(surname));////////////try/////////
-        if(!patt_name.test(surname)) {
-            error = error + " surname";
-        }
-        
-        var birthdate = $('#birthdate').val();
-        if(!birthdate) {
-            error = error + " birthdate";
-        }
-        
-        var address = $('#address').val();
-        alert("address  "+address+"  "+patt_addr.test(address));////////////try/////////
-        if(patt_addr.test(address)) {
-            error = error + " address";
-        }
-        
-        var phone = $('#phone').val();
-        alert("phone  "+phone+"  "+patt_phone.test(phone));////////////try/////////
-        if(!patt_phone.test(phone)) {
-            error = error + " phone";
-        }
-        
-        if(error == "") {
-            if(password == password_conf) {
-                var parameter = "username="+username;
-                    parameter = parameter + "&password"+password;
-                    parameter = parameter + "&email"+email;
-                    parameter = parameter + "&name"+name;
-                    parameter = parameter + "&surname"+surname;
-                    parameter = parameter + "&birthdate"+birthdate;
-                    parameter = parameter + "&address"+address;
-                    parameter = parameter + "&phone"+phone;
-                    
-                alert("parameter  "+parameter);///////////////try/////////////
-                
-                // AJAX
-                if (window.XMLHttpRequest) {
-                    // code for IE7+, Firefox, Chrome, Opera, Safari
-                    xmlhttp = new XMLHttpRequest();
-                } else {
-                    // code for IE6, IE5
-                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-                }
-                xmlhttp.onreadystatechange = function() {
-                    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                        result = xmlhttp.responseText;
-                        if(result == "success") {
-                            alert("Success");
-                            location.reload();
-                        }
-                        else {
-                            alert("Have problem in process. please try again.");
-                        }
-                    }
-                }
-                //xmlhttp.open("POST","register.php?"+parameter,true);
-                //xmlhttp.send();
+        $.post('check_username.php',
+        {
+            username: user   
+        }).done(function(result){
+            //alert(result);//////////try/////////
+            
+            if(result == "success") {
+                alert("Username is not available");
             }
             else {
-                alert("Please re check password and confirm password");
+                alert("Username is available");
+                 $('#username').val('');
+                $('#username').focus();
             }
-        }
-        else {
-            alert("Please fill in "+error);
-        }
+        });
     }
-*/
 </script>
 </body>
 </html>

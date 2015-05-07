@@ -148,64 +148,84 @@
             $bstock_n = (string)"bstock".$i;
             $bstock = $_POST[$bstock_n];
             
-            $price_temp = (string)$currency.$btotal_price;
-            
-            
             //update book in stock
-            $sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
+            $sql_selece_b = "SELECT amount FROM book WHERE id_book=".$bid;
+            $result_select_b = mysqli_query($link, $sql_selece_b);
             
-            echo $sql_book;/////////////try////////////
+            $row_s_b = mysqli_fetch_array($result_select_b);
             
-            try {
-                $result_tran = mysqli_query($link, $sql_book);
-            
-                //save transaction into DB
-                $sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
-                    . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
-            
-                //echo $sql_tran;//////////////try/////////
-                try {
-                    $result_tran = mysqli_query($link, $sql_tran);
-                    
-                } catch (Exception $ex) {
+            // check order and in stock
+            if($row_s_b['amount'] < $bamount) {
     ?>
                 <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
                 
      <?php
-                redirect('home.php');                 
+                    redirect('home.php');                             
+            }
+            else {
+                $sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
+
+                //echo $sql_book;/////////////try////////////
+
+                try {
+                    $result_book = mysqli_query($link, $sql_book);
+
+                    //save transaction into DB
+                    $sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
+                        . "VALUES (".$uid.", ".$bid.", ".$bamount.", ".$btotal_price.", '".$date."')";
+
+             //       echo $sql_tran;//////////////try/////////
+                    
+                    try {
+                        $result_tran = mysqli_query($link, $sql_tran);
+
+                    } catch (Exception $ex) {
+        ?>
+                    <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
+
+         <?php
+                        redirect('home.php');                 
+                    }
+
+                } catch(Exception $e) {
+         ?>
+                    <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
+
+         <?php
+                    redirect('home.php'); 
+                }// end try cath
+
+
+/*
+                if($currency != '$') {
+                    $currency = "Baht";
                 }
-                
-            } catch(Exception $e) {
-     ?>
-                <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
-                
-     <?php
-                redirect('home.php'); 
-            }
-            
-            
-            
-            if($currency != '$') {
-                $currency = "Baht";
-            }
-            
-            // item
-            $pdf->SetFont('Arial','',16);
-            $pdf->Cell(10);
-            $pdf->Cell(10,10,($i+1),0,0,'L');
-            $pdf->Cell(10);
-            $pdf->Cell(50,10,$bname,0,0,'L');
-            $pdf->Cell(55);
-            $pdf->Cell(10,10,$bamount,0,0,'L');
-            $pdf->Cell(20);
-            $pdf->Cell(10,10,($currency.$btotal_price),0,0,'L');
-            
-            // Line break
-            $pdf->Ln(15);
-            
-     }
-     
-     // summary
+*/
+ /*               echo $i;//////////////try/////////
+                echo $bname;//////////////try/////////
+                echo $bamount;//////////////try/////////
+                echo ($currency.$btotal_price);//////////////try/////////
+ */               
+                // item
+                $pdf->SetFont('Arial','',16);
+                $pdf->Cell(10);
+                $pdf->Cell(10,10,($i+1),0,0,'L');
+                $pdf->Cell(10);
+                $pdf->Cell(50,10,$bname,0,0,'L');
+                $pdf->Cell(55);
+                $pdf->Cell(10,10,$bamount,0,0,'L');
+                $pdf->Cell(20);
+                $pdf->Cell(10,10,($currency.$btotal_price),0,0,'L');
+
+                // Line break
+                $pdf->Ln(15);
+        }//end else
+    }//end for
+/*
+    echo $total_item;//////////////try/////////
+    echo $currency.$total_price;//////////////try/////////
+*/  
+    // summary
     $pdf->SetFont('Arial','B',16);
     $pdf->Cell(40);
     $pdf->Cell(10,10,"Total",0,0,'L');
@@ -215,7 +235,6 @@
     $pdf->Cell(20);
     $pdf->Cell(10,10,($currency.$total_price),0,0,'L');
 
-
-    
     $pdf->Output();
+     
 ?>
