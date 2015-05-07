@@ -46,16 +46,27 @@
     // create pdf file
     $pdf = new FPDF();
     $pdf->AddPage();
-        
-    //set font
-    $pdf->SetFont('Arial','B',24);
     
-    // head
-    $pdf->Cell(92);
-    $pdf->Cell(10,10,'Receipt',0,0,'C');
-    // Line break
+    // Logo
+    $pdf->Image('image/logo3.jpg',10,6,30);
+         
+    // contact
+    $pdf->SetFont('Arial','',22);
+    $pdf->SetTextColor(158, 84, 23);
+    $pdf->Cell(40);
+    $pdf->Cell(10,10,'Shiro Store',0,0,'L');
+    $pdf->Ln(10);
+    
+    $pdf->SetTextColor(0, 0, 0);
+    $pdf->SetFont('Arial','',12);
+    $pdf->Cell(40);
+    $pdf->Cell(10,10,'Faculty of Engineering,Mahidol University 25/25 Phutthamomthon 4 Rd.Salaya,,',0,0,'L');
+    $pdf->Ln(10);
+    
+    $pdf->Cell(40);
+    $pdf->Cell(10,10,'Nakhon Pathom 73170,Thailand  089-665-6656, 081-426-5458',0,0,'L');
     $pdf->Ln(20);
-    
+
     //firstname
     $pdf->SetFont('Arial','B',16);
     $pdf->Cell(10);
@@ -139,16 +150,39 @@
             
             $price_temp = (string)$currency.$btotal_price;
             
-            //save transaction into DB
-            $sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
-                    . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
-            
-            $result_tran = mysqli_query($link, $sql_tran);
             
             //update book in stock
             $sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
             
-            $result_tran = mysqli_query($link, $sql_book);
+            echo $sql_book;/////////////try////////////
+            
+            try {
+                $result_tran = mysqli_query($link, $sql_book);
+            
+                //save transaction into DB
+                $sql_tran = "INSERT INTO `transaction`(`id`, `id_book`, `amount`, `price`, `date`)"
+                    . "VALUES (".$uid.", ".$bid.", ".$bamount.", '".$price_temp."', '".$date."')";
+            
+                //echo $sql_tran;//////////////try/////////
+                try {
+                    $result_tran = mysqli_query($link, $sql_tran);
+                    
+                } catch (Exception $ex) {
+    ?>
+                <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
+                
+     <?php
+                redirect('home.php');                 
+                }
+                
+            } catch(Exception $e) {
+     ?>
+                <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
+                
+     <?php
+                redirect('home.php'); 
+            }
+            
             
             
             if($currency != '$') {
@@ -181,29 +215,7 @@
     $pdf->Cell(20);
     $pdf->Cell(10,10,($currency.$total_price),0,0,'L');
 
-    // Line break
-    $pdf->Ln(30);
-    
-    // contact
-    $pdf->SetFont('Arial','',10);
-    $pdf->Cell(105);
-    $pdf->Cell(10,10,'Shiro Store  Faculty of Engineering,Mahidol University,',0,0,'L');
-    $pdf->Ln(10);
-    
-    $pdf->Cell(35);
-    $pdf->Cell(10,10,'25/25 Phutthamomthon 4 Rd.Salaya,Nakhon Pathom 73170,Thailand  089-665-6656, 081-426-5458',0,0,'L');
-    $pdf->Ln(10);
- /*   
-    $pdf->Cell(135);
-    $pdf->Cell(10,10,'25/25 Phutthamomthon 4 Rd.,',0,0,'L');
-    $pdf->Ln(10);
-    
-    $pdf->Cell(135);
-    $pdf->Cell(10,10,'Salaya,Nakhon Pathom 73170,Thailand',0,0,'L');
-    $pdf->Ln(10);
- */   
-    $pdf->Cell(145);
-    $pdf->Cell(10,10,'',0,0,'L');
+
     
     $pdf->Output();
 ?>

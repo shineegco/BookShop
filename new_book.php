@@ -125,7 +125,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="text" id="book_name"  name="book_name" placeholder="Book Name"/>
+                <input class="large" type="text" id="book_name"  name="book_name" required pattern="^[a-zA-Z0-9' &]+" placeholder="Book Name"/>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -133,7 +133,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="text" id="book_author" name="book_author" placeholder="Author"/>
+                <input class="large" type="text" id="book_author" name="book_author" required pattern="^[a-zA-Z' ]+" placeholder="Author"/>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -141,7 +141,7 @@
 	<div class="element-textarea">
             <label class="title"></label>
             <div class="item-cont">
-                <textarea class="medium" id="book_detail"  name="book_detail" cols="20" rows="5" placeholder="Detail"></textarea>
+                <textarea class="medium" id="book_detail"  name="book_detail" cols="20" rows="5" required pattern="^[a-zA-Z0-9 ',?&()-.]+" placeholder="Detail"></textarea>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -164,7 +164,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="text" id="book_price" name="book_price" placeholder="Price"/>
+                <input class="large" type="number" id="book_price" name="book_price" min="1" required pattern="^[0-9]+" placeholder="Price"/>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -172,7 +172,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="text" id="book_amount" name="book_amount" placeholder="Amount"/>
+                <input class="large" type="number" id="book_amount" name="book_amount" min="1" required pattern="^[0-9]+" placeholder="Amount"/>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -182,7 +182,7 @@
             <div class="item-cont">
                 <label class="large" >
                     <div class="button" style="background-color: #c35c08">Choose File</div>
-                    <input type="file" class="file_input" id="fileToUpload" name="fileToUpload" id="fileToUpload" />
+                    <input type="file" class="file_input" id="fileToUpload" required  name="fileToUpload" id="fileToUpload" />
                     <div class="file_text">Attach Cover</div><span class="icon-place"></span>
                 </label>
             </div>

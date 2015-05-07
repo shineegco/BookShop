@@ -50,7 +50,7 @@
         }
     }
    $book_name =   $_POST['book_name'];
-   $book_acthor = $_POST['book_acthor'];
+   $book_acthor = $_POST['book_author'];
    $book_detail = $_POST['book_detail'];
    $book_catagory_id = $_POST['catagory'];
    $book_price = $_POST['book_price'];

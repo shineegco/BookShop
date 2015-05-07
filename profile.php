@@ -292,7 +292,8 @@
             </div>
             <div class="panel-body">
                 <div class="row">
-                
+             
+            <form method="post" action="update_personinfo.php">
                 <div class=" col-md-9 col-lg-9 "> 
                     <table class="table table-user-information">
                     <tbody>
@@ -324,16 +325,17 @@
                     </tbody>
                   </table>
                 </div>
+            
               </div>
             </div>
                  <div class="panel-footer">                     
                         <span class="pull-right">
-                            <input type="button" id="save" value="save" class="btn-sample" onclick="save()">
+                            <input type="submit" id="save" value="save" class="btn-sample" >
                             <input type="button" id="cancel" value="cancel" class="btn-sample2" onclick="cancel()">
                             <a data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" onclick="edit()"><i class="glyphicon glyphicon-edit"></i></a>
                             <a href="include/logout.inc.php" data-original-title="Logout" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
                         </span>
-                     
+             </form>        
                         <br>
                  </div>
             
@@ -408,9 +410,27 @@
         }
         
         function save() {
+            var patt = new RegExp("^[a-zA-Z]+");
+            var error = "";
+            
             var name = $('#name').val();
+            if(!name){
+                error = error + " name ";
+            }
+            else if(!patt.test(name)) {
+                error = error + " name ";
+            }
+            
             var surname = $('#surname').val();
+            if(!surname){
+                error = error + " surname ";
+            }
+            else if(!patt.test(surname)) {
+                error = error + " surname ";
+            }
+            
             var birthday = $('#birthday').val();
+            
             var email = $('#email').val();
             var address = $('#address').val();
             var phone = $('#phone').val();

@@ -1,6 +1,9 @@
 <?php
     //include
     require_once('include/config.inc.php');
+    
+    // Include required functions file 
+    require_once('include/functions.inc.php'); 
 
     $name = $_POST['name'];
     $surname = $_POST['surname'];
@@ -8,7 +11,7 @@
     $address = $_POST['address'];
     $phone = $_POST['phone'];
     $birthdate = $_POST['birthday'];
-    $id = $_POST['id'];
+    $id = $_POST['uid'];
     
     //echo $name."  <br>".$surname."  <br>".$email."  <br>".$address."  <br>".$phone."  <br>".$birthdate;///////////try///////////
     
@@ -24,7 +27,15 @@
     try{
         // insert to table
         $result = mysqli_query($link, $sql_person);
+        
+        redirect('profile.php'); 
     }catch(Exception $e){
+        
+?>
+    <script> alert('Have a problem in process. Please try again.');</script>
+    
+<?php  
+        redirect('profile.php'); 
         echo "fail";
     }
     

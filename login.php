@@ -134,7 +134,7 @@
 						<div class="row">
 							<div class="col-lg-12">
                                                             
-                                                            <center>    <img src="image/logo.png"></center> 
+                                                            <center>    <img src="image/logo3.jpg"></center> 
 								<form id="login-form" action="include/login.inc.php" method="post" role="form" style="display: block;">
 									<div class="form-group">
 										<input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="Username" value="" autofocus>

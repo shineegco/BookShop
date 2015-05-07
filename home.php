@@ -50,8 +50,6 @@
     <!-- Custom CSS -->
     <link href="css/shop-homepage.css" rel="stylesheet">
     
-    
-    <script type="text/javascript" src="js/simpleCart.js"></script>
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -260,6 +258,8 @@
             $('#bdetail').attr("readonly", false);
             $('#bprice').attr("readonly", false);
             
+            $('#bsave').html('');
+            
             text = '<input type="button" id="save" value="Save" onclick="save(\''+id+'\')">'
                 + '&nbsp;&nbsp;<input type="button" id="cancel" value="Cancel" onclick="cancel()">'
         
@@ -275,6 +275,8 @@
             
             $('#save').hide();
             $('#cancel').hide();
+            
+            location.reload();  
         }
         
         function bdelete(id,name) {
@@ -298,34 +300,71 @@
         }
         
         function save(id) {
-            var name = $('#bname').val();
-            var author = $('#bauthor').val();
-            var amount = $('#bamount').val();
-            var detail = $('#bdetail').val();
-            var price = $('#bprice').val();
+            var error = "";
             
+            var name = $('#bname').val();
+            if(!name) {
+                error = error + " Book's name ";
+            }
+            if(!(/^[a-zA-Z0-9- ']*$/.test(name))) {
+                error = error + " Book's name ";
+            }
+            
+            var author = $('#bauthor').val();
+            if(!author) {
+                error = error + " Author ";
+            }
+            if(!(/^[a-zA-Z0-9- ']*$/.test(author))) {
+                error = error + " Author ";
+            }
+            
+            var amount = $('#bamount').val();
+            
+            var detail = $('#bdetail').val();
+            if(!detail) {
+                error = error + " Author ";
+            }
+            if(!(/^[a-zA-Z0-9- '?.&,()]*$/.test(detail))) {
+                error = error + " Detail ";
+            }
+            
+            var price = $('#bprice').val();
+            if(!price) {
+                error = error + " Price ";
+            }
+            if(parseInt(price) != price || price <= 0) {
+                error = error + " Price ";
+            }
+            
+            
+            //salert(error);////////try//////
             //alert("name  "+name+"  author  "+author+"  amount  "+amount+"  detail  "+detail+"  price  "+price);//////try/////
             
-            $.post('update_book.php',
-            {
-                name: name,
-                author: author,
-                amount: amount,
-                detail: detail,
-                price: price,
-                id: id   
-            }).done(function(result){
-                //alert("result "+result);//////////try/////////
-                
-                if(result == "success") {
-                    alert("Success");
-                    cancel();
-                    //location.reload();
-                }
-                else {
-                    alert("Have problem in process. please try again.");
-                }
-            });
+            if(error != "") {
+                alert("Please recheck "+error);
+            }
+            else {
+                $.post('update_book.php',
+                {
+                    name: name,
+                    author: author,
+                    amount: amount,
+                    detail: detail,
+                    price: price,
+                    id: id   
+                }).done(function(result){
+                    //alert("result "+result);//////////try/////////
+
+                    if(result == "success") {
+                        alert("Success");
+                        cancel();
+                        //location.reload();
+                    }
+                    else {
+                        alert("Have problem in process. please try again.");
+                    }
+                });
+            }
         }
         
         // clear item in cart
@@ -377,15 +416,25 @@
             else {
                 //alert("b_id  "+b_id+"  b_name  "+b_name+"  b_total_price  "+b_total_price+"  b_amount  "+b_amount+"  b_price  "+b_price);/////try//////
 
-                text = '<input type="hidden" id="b_id'+num_item+'" name="b_id'+num_item+'" value="'+b_id+'">'
-                    + '<input type="hidden" id="b_name'+num_item+'" name="b_name'+num_item+'" value="'+b_name+'">'
-                    + '<input type="hidden" id="b_total_price'+num_item+'" name="b_total_price'+num_item+'" value="'+b_total_price+'">'
-                    + '<input type="hidden" id="b_amount'+num_item+'" name="b_amount'+num_item+'" value="'+b_amount+'">'
-                    + '<input type="hidden" id="b_price'+num_item+'" name="b_price'+num_item+'" value="'+b_price+'">'
-                    + '<input type="hidden" id="b_stock'+num_item+'" name="b_stock'+num_item+'" value="'+stock_new+'">';
+                // check order 
+                for(i=0; i<num_item; i++) {
+                    $('#b_id'+i).val() == b_id) {
+                        var tp = parseInt($('#b_total_price'+i).val());
+                        $('#b_total_price'+i).val();
+                        
+                    }
+                    else {
+                        text = '<input type="hidden" id="b_id'+num_item+'" name="b_id'+num_item+'" value="'+b_id+'">'
+                            + '<input type="hidden" id="b_name'+num_item+'" name="b_name'+num_item+'" value="'+b_name+'">'
+                            + '<input type="hidden" id="b_total_price'+num_item+'" name="b_total_price'+num_item+'" value="'+b_total_price+'">'
+                            + '<input type="hidden" id="b_amount'+num_item+'" name="b_amount'+num_item+'" value="'+b_amount+'">'
+                            + '<input type="hidden" id="b_price'+num_item+'" name="b_price'+num_item+'" value="'+b_price+'">'
+                            + '<input type="hidden" id="b_stock'+num_item+'" name="b_stock'+num_item+'" value="'+stock_new+'">';
 
-                // add item to cart list
-                $('#cart_list').append(text);
+                        // add item to cart list
+                        $('#cart_list').append(text);
+                    }
+                }
                 
                 // show total price and total item to order
                 var tot_p = parseInt($('#total_price').html());

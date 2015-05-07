@@ -44,7 +44,7 @@
                 $password = $mysqli->real_escape_string($_POST['password']); 
 
                 // Construct SQL statement for query & execute 
-                $sql = "SELECT * FROM username WHERE username = '" . $username . "' AND password = '" . md5($password) . "'"; 
+                $sql = "SELECT * FROM username WHERE username = '" . addslashes($username ). "' AND password = '" . md5($password) . "'"; 
 
                 $result = $mysqli->query($sql); 
 
