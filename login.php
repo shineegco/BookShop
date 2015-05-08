@@ -236,10 +236,10 @@
             //alert(result);//////////try/////////
             
             if(result == "success") {
-                alert("Username is not available");
+                alert("You can use this username");
             }
             else {
-                alert("Username is available"); 
+                alert("You cannot use this username"); 
                 $('#username1').focus();
                 $('#username1').val("");
             }

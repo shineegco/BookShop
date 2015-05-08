@@ -565,7 +565,7 @@
             // delete row in table
             $('#cart'+id).remove();
 
-
+            //change id in input hidden
             for(var i=num_item-1; i>id; i--) {		
                 var b_id = document.getElementById("b_id"+i);
                 b_id.id = "b_id"+(i-1);  // using element properties
