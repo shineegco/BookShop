@@ -5,7 +5,7 @@
     $name = $_POST['name'];
     $author = $_POST['author'];
     $amount = $_POST['amount'];
-    $detail = $_POST['detail'];
+    $detail = addslashes($_POST['detail']);
     $price = $_POST['price'];
     $id = $_POST['id'];
         

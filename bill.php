@@ -156,11 +156,13 @@
             
             // check order and in stock
             if($row_s_b['amount'] < $bamount) {
+                  
     ?>
                 <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
+                <meta HTTP-EQUIV="Refresh" CONTENT="0; URL=home.php">
                 
      <?php
-                    redirect('home.php');                             
+                                               
             }
             else {
                 $sql_book = "UPDATE `book` SET `amount`=".$bstock." WHERE `id_book`=".$bid;
@@ -182,17 +184,19 @@
                     } catch (Exception $ex) {
         ?>
                     <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
+                    <meta HTTP-EQUIV="Refresh" CONTENT="0; URL=home.php">
 
          <?php
-                        redirect('home.php');                 
+                                   
                     }
 
                 } catch(Exception $e) {
          ?>
                     <script>alert("Cannot checkout. Please recheck your order in stock.")</script>
+                    <meta HTTP-EQUIV="Refresh" CONTENT="0; URL=home.php">
 
          <?php
-                    redirect('home.php'); 
+                    
                 }// end try cath
 
 

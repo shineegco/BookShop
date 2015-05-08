@@ -10,7 +10,7 @@
     $name = $_POST['firstname'];
     $surname = $_POST['lastname'];
     $email = $_POST['email'];
-    $address = $_POST['address'];
+    $address = addslashes($_POST['address']);
     $phone = $_POST['phone'];
     $birthdate = $_POST['birthdate'];
     
@@ -49,6 +49,7 @@
         ?>
                     <script>
                             alert("Success");
+                            <meta HTTP-EQUIV="Refresh" CONTENT="0; URL=login.php">
                     </script>
          <?php       
                 header("location:login.php");
@@ -85,5 +86,4 @@
     //close connect
     mysqli_close($link);
     
-    header("location:login.php");
 ?>
