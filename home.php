@@ -175,9 +175,9 @@
                                 text = text+ '<h2 class="item_name"><input type="text" id="bname" value="'+jsonObj[i].name+'" readonly></h2>'
                                     + '<h4>Author: <input type="text" id="bauthor" value="'+jsonObj[i].author+'" readonly></h4>'
                                     + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
-                                    + '<h4>In stock: <input type="number"  min="1" max="999" id="bamount" value="'+jsonObj[i].amount+'" readonly></h4> <br>'
+                                    + '<h4>In stock: <input type="number"  min="0" max="999" id="bamount" value="'+jsonObj[i].amount+'" readonly></h4> <br>'
                                     + '<h4><textarea rows="6" cols="80" id="bdetail" readonly>'+jsonObj[i].detail+'</textarea></h4> <br>'
-                                    + '<h4><span class="item_price"> $<input type="text" size="4" id="bprice" value="'+jsonObj[i].price+'" readonly></span>'
+                                    + '<h4><span class="item_price"> $<input type="number" min="1" max="999" size="4" id="bprice" value="'+jsonObj[i].price+'" readonly></span>'
                                     + '&nbsp;&nbsp;<input type="button" id="edit" value="Edit" onclick="edit(\''+jsonObj[i].id_book+'\')">'
                                     + '&nbsp;&nbsp;<input type="button" id="delete" value="Delete" onclick="bdelete(\''+jsonObj[i].id_book+'\',\''+jsonObj[i].name+'\')">'
                                     + '<br>&nbsp;&nbsp;&nbsp;&nbsp;<div id="bsave"></div>';
@@ -306,7 +306,7 @@
             if(!name) {
                 error = error + " Book's name ";
             }
-            if(!(/^[a-zA-Z0-9- ']*$/.test(name))) {
+            if(!(/^[a-zA-Z0-9 -&']*$/.test(name))) {
                 error = error + " Book's name ";
             }
             
@@ -322,12 +322,12 @@
             
             var detail = $('#bdetail').val();
             if(!detail) {
-                error = error + " Author ";
-            }
-            if(!(/^[a-zA-Z0-9- '?.&,()]*$/.test(detail))) {
                 error = error + " Detail ";
             }
-            
+        /*    if(!(/^[a-zA-Z0-9- '?.&,()]*$/.test(detail))) {
+                error = error + " Detail ";
+            }
+        */    
             var price = $('#bprice').val();
             if(!price) {
                 error = error + " Price ";
@@ -414,7 +414,7 @@
             }
             else {
                 //alert("b_id  "+b_id+"  b_name  "+b_name+"  b_total_price  "+b_total_price+"  b_amount  "+b_amount+"  b_price  "+b_price);/////try//////
-
+                   
                 // check item has in order
                 var check = 0;
                 for(i=0; i<num_item; i++) {
@@ -471,7 +471,7 @@
 
                     num_item++;
                 }
-                
+                alert("Added");
             }
         }
         

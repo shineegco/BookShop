@@ -299,26 +299,26 @@
                     <tbody>
                       <tr>
                         <td>First name</td>
-                        <td><input type="text" id="name" name="name" required="" pattern="^[a-zA-Z]+" value="<?php echo $row['name']; ?>" readonly ></td>
+                        <td><input type="text" id="name" name="name" required pattern="^[a-zA-Z]+" value="<?php echo $row['name']; ?>" readonly ></td>
                       </tr>
                       <tr>
                         <td>Last name</td>
-                        <td><input type="text" id="surname" name="surname" required="" pattern="^[a-zA-Z]+" value="<?php echo $row['surname']; ?>" readonly ></td>
+                        <td><input type="text" id="surname" name="surname" required pattern="^[a-zA-Z]+" value="<?php echo $row['surname']; ?>" readonly ></td>
                       </tr>
                       <tr>
                         <td>Date of Birth</td>
-                        <td><input type="date" id="birthday" name="birthday" value="<?php echo $row['birthday']; ?>" readonly ></td>
+                        <td><input type="date" id="birthday" name="birthday" required value="<?php echo $row['birthday']; ?>" readonly ></td>
                       </tr>
                       <tr>
                         <td>Email</td>
-                        <td><input type="email" id="email" name="email" value="<?php echo $row['email']; ?>" readonly ></td>
+                        <td><input type="email" id="email" name="email" required value="<?php echo $row['email']; ?>" readonly ></td>
                       </tr>
                       <tr>
                         <td>Address</td>
-                        <td><textarea rows="4" cols="50" id="address" name="address" required="" pattern="[a-zA-Z0-9 .-_/]+" readonly ><?php echo $row['address']; ?></textarea></td>
+                        <td><textarea rows="4" cols="50" id="address" name="address" required pattern="[a-zA-Z0-9 .-_/]+" readonly ><?php echo $row['address']; ?></textarea></td>
                       </tr>
                         <td>Phone Number</td>
-                        <td><input type="text" id="phone" name="phone" required="" pattern="[0-9]{10}" value="<?php echo $row['phone']; ?>" readonly ></td>
+                        <td><input type="text" id="phone" name="phone" required pattern="[0-9]{10}" value="<?php echo $row['phone']; ?>" readonly ></td>
                         <input type="hidden" id="uid" name="uid" value="<?php echo $row['id']; ?>"> 
                       </tr>
                      
@@ -331,6 +331,7 @@
                  <div class="panel-footer">                     
                         <span class="pull-right">
                             <input type="submit" id="save" value="save" class="btn-sample" >
+            </form> 
                             <input type="button" id="cancel" value="cancel" class="btn-sample2" onclick="cancel()">
                             <a data-original-title="Edit this user" data-toggle="tooltip" type="button" class="btn btn-sm btn-warning" onclick="edit()"><i class="glyphicon glyphicon-edit"></i></a>
                             <a href="include/logout.inc.php" data-original-title="Logout" data-toggle="tooltip" type="button" class="btn btn-sm btn-danger"><i class="glyphicon glyphicon-remove"></i></a>

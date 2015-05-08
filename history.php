@@ -45,6 +45,9 @@
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
     
     <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+    <link href="css/datatables-responsive/css/dataTables.responsive.css" rel="stylesheet">
+     <link href="css/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
+   
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 
@@ -134,6 +137,7 @@
                         <div class="panel-body">
                             <div class="dataTable_wrapper">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    
                                     <thead>
                                         <tr>
                                             <th>Order id</th>
