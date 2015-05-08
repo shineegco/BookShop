@@ -125,7 +125,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="text" id="book_name"  name="book_name" required pattern="^[a-zA-Z0-9' &]+" placeholder="Book Name"/>
+                <input class="large" type="text" id="book_name"  name="book_name" maxlength="50" required pattern="^[a-zA-Z0-9' &]+" placeholder="Book Name"/>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -133,7 +133,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="text" id="book_author" name="book_author" required pattern="^[a-zA-Z' ]+" placeholder="Author"/>
+                <input class="large" type="text" id="book_author" name="book_author" maxlength="40" required pattern="^[a-zA-Z' ]+" placeholder="Author"/>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -164,7 +164,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="number" id="book_price" name="book_price" min="1" required pattern="^[0-9]+" placeholder="Price"/>
+                <input class="large" type="number" id="book_price" name="book_price" min="1" max="999" required pattern="^[0-9]+" placeholder="Price"/>
                 <span class="icon-place"></span>
             </div>
         </div>
@@ -172,7 +172,7 @@
 	<div class="element-input">
             <label class="title"></label>
             <div class="item-cont">
-                <input class="large" type="number" id="book_amount" name="book_amount" min="1" required pattern="^[0-9]+" placeholder="Amount"/>
+                <input class="large" type="number" id="book_amount" name="book_amount" min="1" max="999" required pattern="^[0-9]+" placeholder="Amount"/>
                 <span class="icon-place"></span>
             </div>
         </div>

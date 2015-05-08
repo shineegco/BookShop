@@ -172,8 +172,8 @@
                                     + '<div class=""> <br>';
                             
                             if(username == "admin"){
-                                text = text+ '<h2 class="item_name"><input type="text" id="bname" value="'+jsonObj[i].name+'" readonly></h2>'
-                                    + '<h4>Author: <input type="text" id="bauthor" value="'+jsonObj[i].author+'" readonly></h4>'
+                                text = text+ '<h2 class="item_name"><input type="text" id="bname" maxlength="50" value="'+jsonObj[i].name+'" readonly></h2>'
+                                    + '<h4>Author: <input type="text" id="bauthor" maxlength="40" value="'+jsonObj[i].author+'" readonly></h4>'
                                     + '<h4>category: '+jsonObj[i].name_cate+'</h4>'
                                     + '<h4>In stock: <input type="number"  min="0" max="999" id="bamount" value="'+jsonObj[i].amount+'" readonly></h4> <br>'
                                     + '<h4><textarea rows="6" cols="80" id="bdetail" readonly>'+jsonObj[i].detail+'</textarea></h4> <br>'
@@ -306,7 +306,7 @@
             if(!name) {
                 error = error + " Book's name ";
             }
-            if(!(/^[a-zA-Z0-9 -&']*$/.test(name))) {
+            else if(!(/^[a-zA-Z0-9 -&']*$/.test(name))) {
                 error = error + " Book's name ";
             }
             
@@ -314,11 +314,17 @@
             if(!author) {
                 error = error + " Author ";
             }
-            if(!(/^[a-zA-Z0-9- ']*$/.test(author))) {
+            else if(!(/^[a-zA-Z0-9- ']*$/.test(author))) {
                 error = error + " Author ";
             }
             
             var amount = $('#bamount').val();
+            if(!amount) {
+                error = error + " Amount ";
+            }
+            else if(parseInt(amount) != amount || amount < 0){
+                error = error + " Amount ";
+            }
             
             var detail = $('#bdetail').val();
             if(!detail) {
@@ -332,7 +338,7 @@
             if(!price) {
                 error = error + " Price ";
             }
-            if(parseInt(price) != price || price <= 0) {
+            else if(parseInt(price) != price || price <= 0 || price > 999) {
                 error = error + " Price ";
             }
             
@@ -418,8 +424,10 @@
                 // check item has in order
                 var check = 0;
                 for(i=0; i<num_item; i++) {
+                    
+                    // check book id in cart
                     if($('#b_id'+i).val() == b_id) {
-                        // check in stock
+                        // check amount in stock
                         //alert("stock  "+parseInt($('#b_stock'+i).val())+"  amount  "+b_amount);///////////////try///////////
                         if(parseInt($('#b_stock'+i).val()) < b_amount) {
                             alert("Please recheck your order in stock.");
@@ -443,35 +451,45 @@
                         var tot_i = parseInt($('#total_item').html());
                         $('#total_item').html(tot_i+b_amount);
                         
-                        break;                        
-                    }
+                        alert("Added");
+                        
+                        break;  
+                    }// end if check book id
                     
-                    check++;
+                    check++;                    
                 }
                 if(check == num_item) {
-                     text = '<input type="hidden" id="b_id'+num_item+'" name="b_id'+num_item+'" value="'+b_id+'">'
-                            + '<input type="hidden" id="b_name'+num_item+'" name="b_name'+num_item+'" value="'+b_name+'">'
-                            + '<input type="hidden" id="b_total_price'+num_item+'" name="b_total_price'+num_item+'" value="'+b_total_price+'">'
-                            + '<input type="hidden" id="b_amount'+num_item+'" name="b_amount'+num_item+'" value="'+b_amount+'">'
-                            + '<input type="hidden" id="b_price'+num_item+'" name="b_price'+num_item+'" value="'+b_price+'">'
-                            + '<input type="hidden" id="b_stock'+num_item+'" name="b_stock'+num_item+'" value="'+stock_new+'">';
+                    
+                    var in_stock = parseInt($('#book_stock').html());
+                    
+                    // check in stock
+                    if(b_amount < in_stock) {
+                
+                        text = '<input type="hidden" id="b_id'+num_item+'" name="b_id'+num_item+'" value="'+b_id+'">'
+                               + '<input type="hidden" id="b_name'+num_item+'" name="b_name'+num_item+'" value="'+b_name+'">'
+                               + '<input type="hidden" id="b_total_price'+num_item+'" name="b_total_price'+num_item+'" value="'+b_total_price+'">'
+                               + '<input type="hidden" id="b_amount'+num_item+'" name="b_amount'+num_item+'" value="'+b_amount+'">'
+                               + '<input type="hidden" id="b_price'+num_item+'" name="b_price'+num_item+'" value="'+b_price+'">'
+                               + '<input type="hidden" id="b_stock'+num_item+'" name="b_stock'+num_item+'" value="'+stock_new+'">';
 
-                    // add item to cart list
-                    $('#cart_list').append(text);
-                        
-                    // show total price and total item to order
-                    var tot_p = parseInt($('#total_price').html());
-                    $('#total_price').html(tot_p+b_total_price);
+                       // add item to cart list
+                       $('#cart_list').append(text);
 
-                    var tot_i = parseInt($('#total_item').html());
-                    $('#total_item').html(tot_i+b_amount);
+                       // show total price and total item to order
+                       var tot_p = parseInt($('#total_price').html());
+                       $('#total_price').html(tot_p+b_total_price);
 
-                    var sum = parseInt($('#sum').val());
-                    $('#sum').val(sum+1);
+                       var tot_i = parseInt($('#total_item').html());
+                       $('#total_item').html(tot_i+b_amount);
 
-                    num_item++;
+                       var sum = parseInt($('#sum').val());
+                       $('#sum').val(sum+1);
+
+                       num_item++;
+
+                       alert("Added");
+                    }
                 }
-                alert("Added");
             }
         }
         

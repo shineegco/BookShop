@@ -13,7 +13,7 @@
     $link = mysqli_connect(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD) or die("Could not connect to host");
     mysqli_select_db($link, DB_DATABASE) or die("Could not find database");
 
-    $sql = "UPDATE `book` SET `name`='".$name."', `author`='".$author."', `price`='".$price."'"//, `detail`='".$detail."'
+    $sql = "UPDATE `book` SET `name`='".$name."', `author`='".$author."', `price`='".$price."', `detail`='".$detail."'"
                 .", `amount`='".$amount."' WHERE `id_book`=".$id;
     
     //echo $sql."<br>";////////////try/////////

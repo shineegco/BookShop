@@ -49,7 +49,7 @@
         ?>
                     <script>
                             alert("Success");
-                            <meta HTTP-EQUIV="Refresh" CONTENT="0; URL=login.php">
+                            location.replace("login.php");
                     </script>
          <?php       
                 header("location:login.php");
@@ -59,14 +59,16 @@
          ?>
             <script>
                     alert("Have a problem in process. Please try again.");
+                    location.replace("login.php");
             </script>
         <?php
             }
         }catch(Exception $e){
-               // echo "fail";
+                echo "fail";
         ?>
             <script>
                     alert("Have a problem in process. Please try again.");
+                    location.replace("login.php");
             </script>
         <?php
         }
@@ -75,13 +77,12 @@
             echo "fail";
       ?>
             <script>
-                    alert("Username is available. Please try again.");
+                    alert("You cannot use this username. Please try again.");
+                    location.replace("login.php");
             </script>
         <?php
         
     }
-    
-    
     
     //close connect
     mysqli_close($link);

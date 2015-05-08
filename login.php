@@ -172,7 +172,7 @@
 										<input type="text" name="lastname" id="lastname" tabindex="3" required="" pattern="^[a-zA-Z]+" class="form-control" placeholder="LastName" value="">
 									</div>
                                                                         <div class="form-group">
-										<input type="date" name="birthdate" id="birthdate" tabindex="3" required="" class="form-control" placeholder="Date of Birth" value="">
+										<input type="date" name="birthdate" id="birthdate" tabindex="3" required="" class="form-control" onchange="check_date(this.value)" placeholder="Date of Birth" value="">
 									</div>
                                                                         <div class="form-group">
                                                                             <textarea rows="4" cols="50" name="address" id="address" tabindex="3" required="" pattern="[a-zA-Z0-9 .-_/]+" class="form-control" placeholder="Address" value=""></textarea>
@@ -215,6 +215,7 @@
 
     });
     
+    //compare password and confirm password
     function checkPassword() {
         var password = $('#pass').val();
         var password_conf = $('#confirm_password').val();
@@ -226,6 +227,8 @@
             $('#confirm_password').focus();
         }
     }
+    
+    // check username in DB
     function checkUsername(user) {
         //alert(user);//////////////try/////////
         
@@ -244,6 +247,47 @@
                 $('#username1').val("");
             }
         });
+    }
+    
+    // check current date
+    function check_date(input) {
+        //alert("C date  "+input);////////////try/////////
+
+        var temp = input.split("-");
+
+        var year = temp[0];
+        var month = temp[1];
+        var date = temp[2];            
+
+        //alert(date+"  "+month+"   "+year);////////////try//////////
+
+        //get current date
+        var curdate = new Date();
+        var date_c = curdate.getDate();
+        var month_c =  parseInt(curdate.getMonth())+1;
+        var year_c = curdate.getFullYear();
+
+        //alert(date_c+"  "+month_c+"   "+year_c);////////////try//////////
+
+        //check year
+        if(year > year_c) {
+            alert("Please recheck Date of birth");
+            $('#birthday').focus();
+        }
+        else if(year == year_c) {
+            //check month
+            if(month > month_c) {
+                alert("Please recheck Date of birth");
+                $('#birthday').focus();
+            }
+            else if(month == month_c) {
+                //check date
+                if(date > date_c) {
+                    alert("Please recheck Date of birth");
+                    $('#birthday').focus();
+                }
+            }
+        }
     }
 </script>
 </body>

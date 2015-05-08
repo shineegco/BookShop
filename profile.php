@@ -299,15 +299,15 @@
                     <tbody>
                       <tr>
                         <td>First name</td>
-                        <td><input type="text" id="name" name="name" required pattern="^[a-zA-Z]+" value="<?php echo $row['name']; ?>" readonly ></td>
+                        <td><input type="text" id="name" name="name" required pattern="^[a-zA-Z]+" maxlength="40" value="<?php echo $row['name']; ?>" readonly ></td>
                       </tr>
                       <tr>
                         <td>Last name</td>
-                        <td><input type="text" id="surname" name="surname" required pattern="^[a-zA-Z]+" value="<?php echo $row['surname']; ?>" readonly ></td>
+                        <td><input type="text" id="surname" name="surname" required pattern="^[a-zA-Z]+" maxlength="40" value="<?php echo $row['surname']; ?>" readonly ></td>
                       </tr>
                       <tr>
                         <td>Date of Birth</td>
-                        <td><input type="date" id="birthday" name="birthday" required value="<?php echo $row['birthday']; ?>" readonly ></td>
+                        <td><input type="date" id="birthday" name="birthday" required value="<?php echo $row['birthday']; ?>" onchange="check_date(this.value)" readonly ></td>
                       </tr>
                       <tr>
                         <td>Email</td>
@@ -385,6 +385,7 @@
             });
         });
         
+        // edit profile
         function edit() {
             $('#name').attr("readonly", false);
             $('#surname').attr("readonly", false);
@@ -398,6 +399,7 @@
             $('#cancel').show();
         }
         
+        //cancel edit profile
         function cancel() {
             $('#name').attr("readonly", true);
             $('#surname').attr("readonly", true);
@@ -410,6 +412,48 @@
             $('#cancel').hide();
         }
         
+        // check current date
+        function check_date(input) {
+            //alert("C date  "+input);////////////try/////////
+            
+            var temp = input.split("-");
+            
+            var year = temp[0];
+            var month = temp[1];
+            var date = temp[2];            
+            
+            //alert(date+"  "+month+"   "+year);////////////try//////////
+            
+            //get current date
+            var curdate = new Date();
+            var date_c = curdate.getDate();
+            var month_c =  parseInt(curdate.getMonth())+1;
+            var year_c = curdate.getFullYear();
+            
+            //alert(date_c+"  "+month_c+"   "+year_c);////////////try//////////
+            
+            //check year
+            if(year > year_c) {
+                alert("Please recheck Date of birth");
+                $('#birthday').focus();
+            }
+            else if(year == year_c) {
+                //check month
+                if(month > month_c) {
+                    alert("Please recheck Date of birth");
+                    $('#birthday').focus();
+                }
+                else if(month == month_c) {
+                    //check date
+                    if(date > date_c) {
+                        alert("Please recheck Date of birth");
+                        $('#birthday').focus();
+                    }
+                }
+            }
+        }
+        
+        //save profile
         function save() {
             var patt = new RegExp("^[a-zA-Z]+");
             var error = "";
